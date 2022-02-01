@@ -9,3 +9,7 @@ export async function setAuthorization(authorization: string): Promise<void> {
 export async function getAuthorization(): Promise<String|null> {
     return await AsyncStorage.getItem('dlt-authorization');
 }
+
+export async function cleanStorage() {
+  return await AsyncStorage.removeItem('dlt-authorization');
+}
