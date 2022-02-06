@@ -1,23 +1,24 @@
-
-
-import 'react-native-gesture-handler';
 import React, {useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import dva from './src/utils/dva'
+import UserModel from './src/models/Users'
+import Login from './src/models/Auth'
+import SecurityContext from './src/contexts/SecurityContext';
 
-import {AuthProvider} from './src/contexts/auth';
+const app = dva({
+    initialState: {},
+    models: [UserModel, Login],
+    onError(e: any) {
+      console.log('onError', e)
+    },
+});
 
-import Routes from './src/routes';
+const App = app.start(
+    <NavigationContainer>
+        <SecurityContext />
+    </NavigationContainer>
+);
 
-const App: React.FC = () => {
-    const [signed, setSigned] = useState(false);
+export default App
 
-    return (
-        <NavigationContainer>
-            <AuthProvider>
-                <Routes/>
-            </AuthProvider>
-        </NavigationContainer>
-    )
-}
 
-export default App;

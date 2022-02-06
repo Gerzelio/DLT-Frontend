@@ -17,24 +17,31 @@
     "@unform/core": "^2.1.6",
     "axios": "^0.25.0",
     "dva": "^2.4.1",
+    "dva-core": "^2.0.4",
+    "dva-loading": "^3.0.22",
     "expo": "~43.0.0",
     "expo-status-bar": "~1.1.0",
     "qs": "^6.10.3",
     "react": "17.0.1",
-    "react-dom": "17.0.1",
+    "react-dom": "^17.0.1",
+    "react-hook-form": "^7.26.0",
     "react-native": "0.64.3",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.8.0",
     "react-native-web": "0.17.1",
     "react-navigation": "^4.4.4",
-    "redux": "^4.1.2"
+    "react-redux": "^5.0.6",
+    "redux": "^4.1.2",
+    "tcomb-form-native": "^0.6.20",
+    "yarn": "^1.22.17"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@types/qs": "^6.9.7",
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.64.12",
+    "@types/react-redux": "^5.0.6",
     "typescript": "~4.3.5"
   },
   "private": true
