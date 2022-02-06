@@ -10,8 +10,6 @@ import { AuthModelState, Loading } from '../../models/Auth'
 // import { Form } from '@unform/mobile';
 // import { FormHandles } from '@unform/core'
 
-import {useAuth} from "../../contexts/auth";
-
 import Input from "../../components/Inputs";
 
 import styles from "./styles";
