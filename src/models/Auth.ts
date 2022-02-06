@@ -3,12 +3,22 @@ import { Reducer } from 'redux';
 import { NavigationActions } from 'react-navigation';
 import { setAuthorization, cleanStorage } from '../services/authorization';
 import { authenticate } from '../services/login';
-import { Users } from '../controller/UsersController';
+import { Users } from './Users';
 
+export interface Loading {
+    effects: { [key: string]: boolean | undefined };
+    models: {
+      global?: boolean;
+      menu?: boolean;
+      user?: boolean;
+      login?: boolean;
+    };
+}
 
 export interface AuthModelState{
+    loading?: Loading,
     loggedUser?: Users,
-    logged: boolean
+    logged: boolean,
 }
 
 export interface AuthModelType {
@@ -27,6 +37,12 @@ export interface AuthModelType {
 const AuthModel: AuthModelType = {
     namespace: 'auth',
     state: {
+        loading: {
+            effects:{
+                'auth/login':true
+            },
+            models:{}
+        },
         loggedUser: undefined,
         logged: false
     },

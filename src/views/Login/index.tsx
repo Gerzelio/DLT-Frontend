@@ -1,10 +1,12 @@
 
 import React, { useState, Component} from "react";
-
+import { Dispatch, AnyAction } from 'redux';
+import { connect } from 'dva';
 import { View, KeyboardAvoidingView, 
         Image, TextInput, TouchableOpacity, 
         Text, Button} 
         from 'react-native';
+import { AuthModelState, Loading } from '../../models/Auth'
 // import { Form } from '@unform/mobile';
 // import { FormHandles } from '@unform/core'
 
@@ -15,33 +17,54 @@ import Input from "../../components/Inputs";
 import styles from "./styles";
 import { login } from "../../services/auth";
 
+interface LoginProps {
+    dispatch: Dispatch<AnyAction>;
+}
 
-export default class Login extends React.Component{
+interface LoginState {
+    username: string;
+    password: string;
+}
 
-    constructor(props: any){
-        super(props)
-        this.state={
-            username: "",
-            password: ""
-        }
-    }    
+@connect(({ logged }: AuthModelState) => ({
+    submitting: logged,
+  }))
+export default class Login extends Component<LoginProps, LoginState>{
+
+    state: LoginState = {
+        username: "",
+        password: ""
+    };    
 
     validate_field=()=>{
         const { username, password} = this.state
-
+/*
         if(username == ""){
             alert("Preencha o username!!!")
             return false
         }else if(password == ""){
             alert("Preencha a password!!!")
             return false
-        }
+        }*/
         return true
     }
-      handlerLogin=()=>{
-        if(this.validate_field()){
+
+    handlerLogin=()=>{
+        const { username, password } = this.state;
+        const { dispatch } = this.props;
+
+        if(this.validate_field() && dispatch){
             // login();
-            alert("Login efectuado com sucesso!!!")
+           // alert("Login efectuado com sucesso!!!")~
+            console.log(username, password);
+            dispatch({
+                type: 'auth/login',
+                payload: {
+                    username,
+                    password
+                },
+            });
+
         }
         // console.log('Logar');
     }
@@ -69,7 +92,7 @@ export default class Login extends React.Component{
                             keyboardType='default'
                             name="username"
                             returnKeyType="send"
-                            onChangeText={(text : String)=> { this.setState({ username: text }) }} 
+                            onChangeText={(text : string)=> { this.setState({ username: text }) }} 
                         />
     
                         <Text style={styles.txtLabel}> Password (<Text style={styles.txtLink}>Forgot password?</Text>)</Text>
@@ -82,7 +105,7 @@ export default class Login extends React.Component{
                             keyboardType='default'
                             name="password"
                             returnKeyType="send"
-                            onChangeText={(text: String)=> { this.setState({ password: text }) }} 
+                            onChangeText={(text: string)=> { this.setState({ password: text }) }} 
                             secureTextEntry 
                         />
     

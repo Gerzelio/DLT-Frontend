@@ -2,7 +2,10 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { getAuthorization } from './authorization';
 
 const api = axios.create({
-    baseURL: "http://127.0.0.1:8083/",
+    baseURL: "http://localhost:8083/",
+    headers: {
+        "Access-Control-Allow-Origin": "*"
+    }
 });
 
 const defineHeaders = (Headers: any) => {
@@ -15,6 +18,7 @@ const defineHeaders = (Headers: any) => {
 const defineAuth = (Config: any) => {
     const token = getAuthorization();
     const edited_config = Config;
+    edited_config["Access-Control-Allow-Origin"] = "*";
     edited_config["Authorization"] = `Bearer ${token}`;
     return edited_config;
 }
