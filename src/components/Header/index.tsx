@@ -2,13 +2,13 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, Button } from 'react-native';
 
-import {useAuth} from '../../contexts/auth';
+//import {useAuth} from '../../contexts/auth';
 
 import styles from './styles';
 
-import logo from '../../../assets/logo.png';
+//import logo from '../../../assets/logo.png';
 // import bell from '../../../assets/logo.png';
-
+/*
 const Header: React.FC = () =>{
     const { user, logOut} = useAuth();
 
@@ -19,7 +19,7 @@ const Header: React.FC = () =>{
         <View style={styles.header}>
             <Image source={logo} style={styles.logo} />
             <TouchableOpacity style={styles.notification}>
-                {/* <Image source={bell} /> */}
+                {/* <Image source={bell} /> }
                 <View style={styles.circle}>
                     <Text style={styles.notificationText}>{user?.name}</Text>
                     <Button title='Logout' onPress={handleLogout} />
@@ -30,3 +30,4 @@ const Header: React.FC = () =>{
 }
 
 export default Header;
+*/
