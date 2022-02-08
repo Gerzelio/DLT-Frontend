@@ -2,10 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { getAuthorization } from './authorization';
 
 const api = axios.create({
-    baseURL: "http://localhost:8083/",
-    headers: {
-        "Access-Control-Allow-Origin": "*"
-    }
+    baseURL: "http://localhost:8083/"
 });
 
 const defineHeaders = (Headers: any) => {

@@ -6,6 +6,6 @@ interface LoginParams {
     password: string;
 }
 export async function authenticate(payload: LoginParams) {
-    const res = await create('/api/login', payload);
+    const res = await create('/api/login', null, payload);
     return res;
 }

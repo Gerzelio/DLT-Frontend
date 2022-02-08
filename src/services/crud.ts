@@ -1,7 +1,7 @@
 import api from './api';
 
-export async function create(params: any, payload: any = {}) {
-    return await api.post(params, payload);
+export async function create(url: any, payload: any = {}, params: any = {}) {
+    return await api.post(url, payload,{ params });
 }
 
 export async function update(params: any, payload: any = {}) {
