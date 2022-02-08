@@ -4,6 +4,7 @@ import { NavigationActions } from 'react-navigation';
 import { setAuthorization, cleanStorage } from '../services/authorization';
 import { authenticate } from '../services/login';
 import { Users } from './Users';
+import { navigate } from '../routes/RootNavigation';
 
 export interface Loading {
     effects: { [key: string]: boolean | undefined };
@@ -62,10 +63,10 @@ const AuthModel: AuthModelType = {
             if(status === 200){
 
                 setAuthorization(data.token);
-            }
 
-            //window.location.href = '/Home';
-            yield put(NavigationActions.navigate({ routeName: 'Home' }));
+                navigate({name: "Home", params: {}});
+            }
+            
         },
 
         *logout(_, { put }) {

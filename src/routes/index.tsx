@@ -1,25 +1,18 @@
 
 import React from 'react';
 import { View, ActivityIndicator} from 'react-native';
+import Home from "../views/Home";
+import Login from "../views/Login";
+import { createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import { useAuth} from '../contexts/auth';
+const AppStack = createNativeStackNavigator();
 
-import AuthRoutes from './auth.routes';
-import AppRoutes from './app.routes';
+const Routes: React.FC = () => (
+    <AppStack.Navigator>
+        <AppStack.Screen name="Login" component={Login} options={{headerShown:false}}/>
+        <AppStack.Screen name="Home" component={Home} options={{headerShown:false}}/>
+    </AppStack.Navigator>
+);
 
-const Routes: React.FC = () => {
-    const { signed, loading} = useAuth();
-
-    if(loading){
-        return(
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <ActivityIndicator size="large" color="blue" />
-            </View>
-        );
-    }
-
-    return signed ? <AppRoutes/> : <AuthRoutes />;
-    // return <AppRoutes/> ;
-};
 
 export default Routes;

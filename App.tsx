@@ -4,6 +4,7 @@ import dva from './src/utils/dva'
 import UserModel from './src/models/Users'
 import Login from './src/models/Auth'
 import SecurityContext from './src/contexts/SecurityContext';
+import { navigationRef } from './src/routes/RootNavigation'; 
 
 const app = dva({
     initialState: {},
@@ -14,7 +15,7 @@ const app = dva({
 });
 
 const App = app.start(
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
         <SecurityContext />
     </NavigationContainer>
 );

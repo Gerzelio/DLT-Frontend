@@ -5,8 +5,8 @@ import { View, ActivityIndicator} from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Users, UsersModelState } from '../models/Users';
 import { AuthModelState } from '../models/Auth';
-import AuthRoutes from '../routes/auth.routes';
-import AppRoutes from '../routes/app.routes';
+//import AuthRoutes from '../routes/auth.routes';
+import AppRoutes from '../routes';
 
 
 /*export interface ConnectProps<T = {}> extends Partial<RouterTypes<Route, T>> {
@@ -58,8 +58,8 @@ class SecurityContext extends Component<SecurityLayoutProps, SecurityState> {
                 </View>
             );
         }
-
-        return isLogged? <AppRoutes/> : <AuthRoutes />;
+        
+        return <AppRoutes/>;
        
     }
 
