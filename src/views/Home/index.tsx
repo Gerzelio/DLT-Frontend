@@ -8,6 +8,8 @@ import styles from './styles';
 import Footer from '../../components/Mobile/Footer';
 import Dashboard from '../../components/Dashboard';
 import DashCard from '../../components/Mobile/DashCard';
+import { Button } from 'react-native-elements';
+import { navigate } from '../../routes/RootNavigation';
 
 export default function Home(){
     return (
@@ -23,7 +25,13 @@ export default function Home(){
                 <DashCard prov={"MANICA "} />
                 <DashCard prov={"CABO-DELGADO"} />
                 <DashCard prov={"NAMPULA "} />
-            </ScrollView> */}
+            </ScrollView> */
+                <Button 
+                    title="Create User"
+                    // backgroundColor="#2196F3"
+                    onPress={() => navigate({name: "Users", params: {}})}
+                />
+            }
             <Footer />
         </View>
     )    
