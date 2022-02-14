@@ -6,7 +6,8 @@ import { View, KeyboardAvoidingView,
         TextInput, TouchableOpacity, 
         Text, Button} 
         from 'react-native';
-import { UsersModelState } from '../../models/Users';        
+import { UsersModelState } from '../../models/Users';  
+import { AuthModelState } from "../../models/Auth";      
 
 import Input from "../../components/Inputs";
 
@@ -14,35 +15,65 @@ import styles from "./styles";
 
 interface UsersProps {
     dispatch: Dispatch<AnyAction>;
+    user: Users;
 }
 
 interface UsersState{
-    username: string;
-    password: string;
-    email: string;
-    name: string;
-    website: string;
-    location: string;
-    bio: string;
+    surname: string,
+    name: string,
+    phoneNumber: string,
+    email: string,
+    username: string,
+    password: string,
+    entryPoint: string,
+    status: number,
+    isLocked: boolean,
+    isExpired: boolean,
+    isCredentialsExpired: boolean,
+    isEnabled: boolean,
+    createdBy: number,
+    dateCreated: string,
+    updatedBy: number,
+    dateUpdated: string,
+    locality: number,
+    partners: number,
+    profiles: number,
+    us: number
 }
 
-@connect(({ users }: UsersModelState) => ({
+@connect(({ users }: UsersModelState,
+    {loggedUser}:AuthModelState) => ({
     submitting: users,
+    user: loggedUser
 }))
 export default class Users extends Component<UsersProps, UsersState>{
 
     state: UsersState = {
+        surname: "",
+        name: "",
+        phoneNumber: "",
+        email: "",
         username: "",
         password: "",
-        email: "",
-        name: "",
-        website: "",
-        location: "",
-        bio: "",
+        entryPoint: "",
+        status: 1,
+        isLocked: false,
+        isExpired: false,
+        isCredentialsExpired: false,
+        isEnabled: true,
+        createdBy: 1, // TODO: pegar do user logado
+        dateCreated: "2022-01-26T22:00:00.000+00:00", // TODO: Melhor passar responsabilidade para a BD
+        updatedBy: 1,
+        dateUpdated: "2022-01-26T22:00:00.000+00:00", // TODO: informar data vazia (melhor passar responsabilidade para a BD)
+        locality: 1, // TODO: pegar do user logado
+        partners: 1, // TODO: pegar do user logado
+        profiles: 1, // TODO: Pegar do formulário
+        us: 1, // TODO: pegar do user logado
     };
 
     validate_fields = () => {
-        const { username, password, email, name, website, location, bio } = this.state;
+        const { surname, name, phoneNumber, email, username, password, entryPoint, status, isLocked, isExpired, isCredentialsExpired, 
+            isEnabled, createdBy, dateCreated, updatedBy, dateUpdated, locality, partners, profiles, us } = this.state;
 
         //TODO perform validations
 
@@ -50,27 +81,44 @@ export default class Users extends Component<UsersProps, UsersState>{
     }
 
     handlerSave = () => {
-        const { username, password, email, name, website, location, bio } = this.state;
+        const { surname, name, phoneNumber, email, username, password, entryPoint, status, isLocked, isExpired, isCredentialsExpired, 
+            isEnabled, createdBy, dateCreated, updatedBy, dateUpdated, locality, partners, profiles, us } = this.state;
         const { dispatch } = this.props;
 
         if (this.validate_fields() && dispatch) {
-            console.log(username, password, email, name, website, location, bio);
+            console.log(surname, name, phoneNumber, email, username, password, entryPoint, status, isLocked, isExpired, isCredentialsExpired, 
+                isEnabled, createdBy, dateCreated, updatedBy, dateUpdated, locality, partners, us);
             dispatch({
                 type: 'users/create',
                 payload: {
+                    surname,
+                    name,
+                    phoneNumber,
+                    email,
                     username,
                     password,
-                    email,
-                    name,
-                    website,
-                    location,
-                    bio,
+                    entryPoint,
+                    status,
+                    isLocked,
+                    isExpired,
+                    isCredentialsExpired,
+                    isEnabled,
+                    createdBy,
+                    dateCreated,
+                    updatedBy,
+                    dateUpdated,
+                    locality,
+                    partners,
+                    profiles,
+                    us,
                 }
             })
         }
     }
 
     render(){
+        const { user } = this.props;
+        
         return(
             
             <KeyboardAvoidingView>
@@ -82,7 +130,7 @@ export default class Users extends Component<UsersProps, UsersState>{
                         <Text>Credentials will be sent to the user by email. A password will be generated automatically if not provided.</Text>
                     </View>
                     <View style={styles.containerPage}>
-                        <Text style={styles.txtLabel}>email</Text>    
+                        <Text style={styles.txtLabel}>E-mail</Text>    
                         <Input 
                             styles={styles.input}
                             autoCorrect={false} 
@@ -113,7 +161,17 @@ export default class Users extends Component<UsersProps, UsersState>{
                             onChangeText={(value : string)=> { this.setState({ password: value }) }} secureTextEntry
                         />
                         
-                        <Text style={styles.txtLabel}>Name</Text>    
+                        <Text style={styles.txtLabel}>Apelido</Text>    
+                        <Input 
+                            autoCorrect={false} 
+                            autoCapitalize='none' 
+                            keyboardType='default'
+                            name="surname"
+                            returnKeyType="send"
+                            onChangeText={(value : string)=> { this.setState({ surname: value }) }}
+                        />
+                        
+                        <Text style={styles.txtLabel}>Nome</Text>    
                         <Input 
                             autoCorrect={false} 
                             autoCapitalize='none' 
@@ -123,34 +181,34 @@ export default class Users extends Component<UsersProps, UsersState>{
                             onChangeText={(value : string)=> { this.setState({ name: value }) }}
                         />
                         
-                        <Text style={styles.txtLabel}>Website</Text>    
+                        <Text style={styles.txtLabel}>Telemóvel</Text>    
                         <Input 
                             autoCorrect={false} 
                             autoCapitalize='none' 
                             keyboardType='default'
-                            name="website"
+                            name="phoneNumber"
                             returnKeyType="send"
-                            onChangeText={(value : string)=> { this.setState({ website: value }) }}
+                            onChangeText={(value : string)=> { this.setState({ phoneNumber: value }) }}
                         />
                         
-                        <Text style={styles.txtLabel}>Location</Text>
+                        <Text style={styles.txtLabel}>Ponto de Entrada</Text>
                         <Input 
                             autoCorrect={false} 
                             autoCapitalize='none' 
                             keyboardType='default'
-                            name="location"
+                            name="entryPoint"
                             returnKeyType="send"
-                            onChangeText={(value : string)=> { this.setState({ location: value }) }}
+                            onChangeText={(value : string)=> { this.setState({ entryPoint: value }) }}
                         />
                         
-                        <Text style={styles.txtLabel}>Bio</Text>    
+                        {/* <Text style={styles.txtLabel}>Bio</Text>    
                         <Input 
                             autoCorrect={false} 
                             autoCapitalize='none' 
                             keyboardType='default'
                             name="bio"
                             returnKeyType="send"
-                            onChangeText={(value : string)=> { this.setState({ bio: value }) }}/>
+                            onChangeText={(value : string)=> { this.setState({ bio: value }) }}/> */}
                             
                         <TouchableOpacity style={styles.btnSubmit} onPress={() => this.handlerSave()}>
                             <Text style={styles.txtLabel}>Save</Text>
