@@ -10,6 +10,8 @@ import { UsersModelState, Users } from '../../models/Users';
 import { AuthModelState } from "../../models/Auth";      
 
 import Input from "../../components/Inputs";
+// import DropDownPicker from 'react-native-dropdown-picker'
+import {Picker} from '@react-native-picker/picker';
 
 import styles from "./styles";
 
@@ -64,7 +66,7 @@ export default class User extends Component<UsersProps, UsersState>{
                     <View>
                         <Text>Credentials will be sent to the user by email. A password will be generated automatically if not provided.</Text>
                     </View>
-                    <View style={styles.containerPage}>
+                    <View >
                         <Text style={styles.txtLabel}>E-mail</Text>    
                         <Input 
                             styles={styles.input}
@@ -73,7 +75,7 @@ export default class User extends Component<UsersProps, UsersState>{
                             keyboardType='default'
                             name="email"
                             returnKeyType="send" 
-                            onChangeText={(value : string)=> { this.setState({ account:{ email: value }}) }}
+                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state, email: value }}) }}
                         />
                         
                         <Text style={styles.txtLabel}>Username</Text>    
@@ -83,7 +85,7 @@ export default class User extends Component<UsersProps, UsersState>{
                             keyboardType='default'
                             name="username"
                             returnKeyType="send" 
-                            onChangeText={(value : string)=> { this.setState({ account:{ username: value }}) }}
+                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state, username: value }}) }}
                         />
                                         
                                                
@@ -94,7 +96,7 @@ export default class User extends Component<UsersProps, UsersState>{
                             keyboardType='default'
                             name="surname"
                             returnKeyType="send"
-                            onChangeText={(value : string)=> { this.setState({ account:{ surname: value }}) }}
+                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state, surname: value }}) }}
                         />
                         
                         <Text style={styles.txtLabel}>Nome</Text>    
@@ -104,7 +106,7 @@ export default class User extends Component<UsersProps, UsersState>{
                             keyboardType='default'
                             name="name"
                             returnKeyType="send"
-                            onChangeText={(value : string)=> { this.setState({account: { name: value }}) }}
+                            onChangeText={(value : string)=> { this.setState({ account: { ...this.state, name: value }}) }}
                         />
                         
                         <Text style={styles.txtLabel}>Telemóvel</Text>    
@@ -114,19 +116,10 @@ export default class User extends Component<UsersProps, UsersState>{
                             keyboardType='default'
                             name="phoneNumber"
                             returnKeyType="send"
-                            onChangeText={(value : string)=> { this.setState({account:{ phoneNumber: value }}) }}
+                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state, phoneNumber: value }}) }}
                         />
                         
-                        <Text style={styles.txtLabel}>Ponto de Entrada</Text>
-                        <Input 
-                            autoCorrect={false} 
-                            autoCapitalize='none' 
-                            keyboardType='default'
-                            name="entryPoint"
-                            returnKeyType="send"
-                            onChangeText={(value : string)=> { this.setState({account:{ entryPoint: value }}) }}
-                        />
-                        
+                                               
                         {/* <Text style={styles.txtLabel}>Bio</Text>    
                         <Input 
                             autoCorrect={false} 
@@ -135,6 +128,58 @@ export default class User extends Component<UsersProps, UsersState>{
                             name="bio"
                             returnKeyType="send"
                             onChangeText={(value : string)=> { this.setState({ bio: value }) }}/> */}
+                            
+                        <Text style={styles.txtLabel}>Ponto de Entrada</Text>
+                        {/* <DropDownPicker
+                            items={[
+                                {label: 'English', value: '1'},
+                                {label: 'Deutsch', value: '2'},
+                                {label: 'French', value: '3'},
+                            ]}
+                            // defaultIndex={0}
+                            containerStyle={{height: 40}}
+                            onChangeItem={(item : string) => { this.setState({ account:{ ...this.state, locality: item }}) }}
+                        /> */}
+
+                        <Picker
+                            // selectedValue={selectedLanguage}
+                            onValueChange={(itemValue, itemIndex) =>
+                                { this.setState({ account:{ ...this.state, locality: itemValue }}) }
+                            }>
+                            <Picker.Item label="Unidade Sanitaria" value="0" />
+                            <Picker.Item label="Escola" value="1" />
+                            <Picker.Item label="Comunidade" value="1" />
+                        </Picker>
+
+                        <Text style={styles.txtLabel}>Parceiro</Text>
+                        <Picker
+                            // selectedValue={selectedLanguage}
+                            onValueChange={(itemValue, itemIndex) =>
+                                { this.setState({ account:{ ...this.state, partners: itemValue }}) }
+                            }>
+                            <Picker.Item label="ABT - ECHO" value="0" />
+                            <Picker.Item label="FGH" value="1" />
+                        </Picker>
+                        
+                        <Text style={styles.txtLabel}>profiles</Text>
+                        <Picker
+                            // selectedValue={selectedLanguage}
+                            onValueChange={(itemValue, itemIndex) =>
+                                { this.setState({ account:{ ...this.state, profiles: itemValue }}) }
+                            }>
+                            <Picker.Item label="US" value="0" />
+                            <Picker.Item label="CM" value="1" />
+                        </Picker>
+                        
+                        <Text style={styles.txtLabel}>Ponto de Referencias</Text>
+                        <Picker
+                            // selectedValue={selectedLanguage}
+                            onValueChange={(itemValue, itemIndex) =>
+                                { this.setState({ account:{ ...this.state, us: itemValue }}) }
+                            }>
+                            <Picker.Item label="CS da Matola" value="0" />
+                            <Picker.Item label="CS 1 de junho" value="1" />
+                        </Picker>
                             
                         <TouchableOpacity style={styles.btnSubmit} onPress={() => this.handlerSave()}>
                             <Text style={styles.txtLabel}>Save</Text>
