@@ -7,6 +7,8 @@ import { Users, UsersModelState } from '../models/Users';
 import { AuthModelState } from '../models/Auth';
 //import AuthRoutes from '../routes/auth.routes';
 import AppRoutes from '../routes';
+import DrawerNavigation from '../routes/DrawerNavigator';
+import AuthNavigation from '../routes/AuthNavigator'
 
 
 /*export interface ConnectProps<T = {}> extends Partial<RouterTypes<Route, T>> {
@@ -47,7 +49,7 @@ class SecurityContext extends Component<SecurityLayoutProps, SecurityState> {
 
     render() {
         const { isReady } = this.state;
-        const {children, loading, currentUser, logged, dispatch } = this.props;
+        const { loading, currentUser, logged } = this.props;
 
         const isLogged = logged && currentUser !== undefined;
 
@@ -59,7 +61,8 @@ class SecurityContext extends Component<SecurityLayoutProps, SecurityState> {
             );
         }
         
-        return <AppRoutes/>;
+        return <AppRoutes />
+       // return isLogged ? <DrawerNavigation /> : <AuthNavigation />;
        
     }
 
