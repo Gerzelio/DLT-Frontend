@@ -6,7 +6,7 @@ import { View, KeyboardAvoidingView,
         TextInput, TouchableOpacity, 
         Text, Button} 
         from 'react-native';
-import { UsersModelState } from '../../models/Users';  
+import { UsersModelState, Users } from '../../models/Users';  
 import { AuthModelState } from "../../models/Auth";      
 
 import Input from "../../components/Inputs";
@@ -15,109 +15,44 @@ import styles from "./styles";
 
 interface UsersProps {
     dispatch: Dispatch<AnyAction>;
-    user: Users;
+    userLogged: Users;
 }
 
 interface UsersState{
-    surname: string,
-    name: string,
-    phoneNumber: string,
-    email: string,
-    username: string,
-    password: string,
-    entryPoint: string,
-    status: number,
-    isLocked: boolean,
-    isExpired: boolean,
-    isCredentialsExpired: boolean,
-    isEnabled: boolean,
-    createdBy: number,
-    dateCreated: string,
-    updatedBy: number,
-    dateUpdated: string,
-    locality: number,
-    partners: number,
-    profiles: number,
-    us: number
+    account: Users,
 }
 
 @connect(({ users }: UsersModelState,
     {loggedUser}:AuthModelState) => ({
     submitting: users,
-    user: loggedUser
+    userLogged: loggedUser
 }))
-export default class Users extends Component<UsersProps, UsersState>{
+export default class User extends Component<UsersProps, UsersState>{
 
     state: UsersState = {
-        surname: "",
-        name: "",
-        phoneNumber: "",
-        email: "",
-        username: "",
-        password: "",
-        entryPoint: "",
-        status: 1,
-        isLocked: false,
-        isExpired: false,
-        isCredentialsExpired: false,
-        isEnabled: true,
-        createdBy: 1, // TODO: pegar do user logado
-        dateCreated: "2022-01-26T22:00:00.000+00:00", // TODO: Melhor passar responsabilidade para a BD
-        updatedBy: 1,
-        dateUpdated: "2022-01-26T22:00:00.000+00:00", // TODO: informar data vazia (melhor passar responsabilidade para a BD)
-        locality: 1, // TODO: pegar do user logado
-        partners: 1, // TODO: pegar do user logado
-        profiles: 1, // TODO: Pegar do formulário
-        us: 1, // TODO: pegar do user logado
+        account: {},
     };
 
     validate_fields = () => {
-        const { surname, name, phoneNumber, email, username, password, entryPoint, status, isLocked, isExpired, isCredentialsExpired, 
-            isEnabled, createdBy, dateCreated, updatedBy, dateUpdated, locality, partners, profiles, us } = this.state;
-
-        //TODO perform validations
-
+        
         return true;
     }
 
     handlerSave = () => {
-        const { surname, name, phoneNumber, email, username, password, entryPoint, status, isLocked, isExpired, isCredentialsExpired, 
-            isEnabled, createdBy, dateCreated, updatedBy, dateUpdated, locality, partners, profiles, us } = this.state;
+        const { account } = this.state;
         const { dispatch } = this.props;
 
         if (this.validate_fields() && dispatch) {
-            console.log(surname, name, phoneNumber, email, username, password, entryPoint, status, isLocked, isExpired, isCredentialsExpired, 
-                isEnabled, createdBy, dateCreated, updatedBy, dateUpdated, locality, partners, us);
+            console.log(account);
             dispatch({
                 type: 'users/create',
-                payload: {
-                    surname,
-                    name,
-                    phoneNumber,
-                    email,
-                    username,
-                    password,
-                    entryPoint,
-                    status,
-                    isLocked,
-                    isExpired,
-                    isCredentialsExpired,
-                    isEnabled,
-                    createdBy,
-                    dateCreated,
-                    updatedBy,
-                    dateUpdated,
-                    locality,
-                    partners,
-                    profiles,
-                    us,
-                }
+                payload: account
             })
         }
     }
 
     render(){
-        const { user } = this.props;
+        const { userLogged } = this.props;
         
         return(
             
@@ -138,7 +73,7 @@ export default class Users extends Component<UsersProps, UsersState>{
                             keyboardType='default'
                             name="email"
                             returnKeyType="send" 
-                            onChangeText={(value : string)=> { this.setState({ email: value }) }}
+                            onChangeText={(value : string)=> { this.setState({ account:{ email: value }}) }}
                         />
                         
                         <Text style={styles.txtLabel}>Username</Text>    
@@ -148,19 +83,10 @@ export default class Users extends Component<UsersProps, UsersState>{
                             keyboardType='default'
                             name="username"
                             returnKeyType="send" 
-                            onChangeText={(value : string)=> { this.setState({ username: value }) }}
+                            onChangeText={(value : string)=> { this.setState({ account:{ username: value }}) }}
                         />
-                                                    
-                        <Text style={styles.txtLabel}>Password</Text>                       
-                        <Input 
-                            autoCorrect={false} 
-                            autoCapitalize='none' 
-                            keyboardType='default'
-                            name="password"
-                            returnKeyType="send" 
-                            onChangeText={(value : string)=> { this.setState({ password: value }) }} secureTextEntry
-                        />
-                        
+                                        
+                                               
                         <Text style={styles.txtLabel}>Apelido</Text>    
                         <Input 
                             autoCorrect={false} 
@@ -168,7 +94,7 @@ export default class Users extends Component<UsersProps, UsersState>{
                             keyboardType='default'
                             name="surname"
                             returnKeyType="send"
-                            onChangeText={(value : string)=> { this.setState({ surname: value }) }}
+                            onChangeText={(value : string)=> { this.setState({ account:{ surname: value }}) }}
                         />
                         
                         <Text style={styles.txtLabel}>Nome</Text>    
@@ -178,7 +104,7 @@ export default class Users extends Component<UsersProps, UsersState>{
                             keyboardType='default'
                             name="name"
                             returnKeyType="send"
-                            onChangeText={(value : string)=> { this.setState({ name: value }) }}
+                            onChangeText={(value : string)=> { this.setState({account: { name: value }}) }}
                         />
                         
                         <Text style={styles.txtLabel}>Telemóvel</Text>    
@@ -188,7 +114,7 @@ export default class Users extends Component<UsersProps, UsersState>{
                             keyboardType='default'
                             name="phoneNumber"
                             returnKeyType="send"
-                            onChangeText={(value : string)=> { this.setState({ phoneNumber: value }) }}
+                            onChangeText={(value : string)=> { this.setState({account:{ phoneNumber: value }}) }}
                         />
                         
                         <Text style={styles.txtLabel}>Ponto de Entrada</Text>
@@ -198,7 +124,7 @@ export default class Users extends Component<UsersProps, UsersState>{
                             keyboardType='default'
                             name="entryPoint"
                             returnKeyType="send"
-                            onChangeText={(value : string)=> { this.setState({ entryPoint: value }) }}
+                            onChangeText={(value : string)=> { this.setState({account:{ entryPoint: value }}) }}
                         />
                         
                         {/* <Text style={styles.txtLabel}>Bio</Text>    

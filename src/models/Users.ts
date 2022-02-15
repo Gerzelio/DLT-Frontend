@@ -15,25 +15,21 @@ export interface Loading {
 
 export interface Users {
   id?: string,
-	surname: string,
-	name: string,
-	phoneNumber: string,
-	email: string,
-	username: string,
-	entryPoint: string,
-	status: boolean,
-	isLocked: boolean,
-	isExpired: boolean,
-	isCredentialsExpired: boolean,
-	isEnabled: boolean,
-	createdBy: string,
-	dateCreated: string,
-	updatedBy: string,
-	dateUpdated: string,
-    locality: any,
-    partners: any,
-    profiles: any,
-    us: any
+	surname?: string,
+	name?: string,
+	phoneNumber?: string,
+	email?: string,
+	username?: string,
+	entryPoint?: string,
+	status?: boolean,
+	createdBy?: string,
+	dateCreated?: string,
+	updatedBy?: string,
+	dateUpdated?: string,
+  locality?: any,
+  partners?: any,
+  profiles?: any,
+  us?: any
 }
 
 export interface UsersModelState{
