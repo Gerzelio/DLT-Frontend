@@ -5,7 +5,6 @@ import { query } from '../services/partners';
 
 export interface Partners {
     id?: string,
-    district?: any,
     name?: string,
     abbreviation?: string,
     description?: string,
@@ -13,7 +12,9 @@ export interface Partners {
     logo?: string,
     status?: string,
     createdBy?: string,
-    updatedBy?: string
+    updatedBy?: string,
+    dateCreated: string,
+    dateUpdated: string
 }
 
 export interface PartnersModelState{
@@ -39,11 +40,11 @@ const PartnersModel: PartnersModelType = {
 
     effects: {
         *fetch({ payload }, { call, put }) {
-            const {status, data} = yield call(query, payload);
-            
+            const response = yield call(query, payload);
+            console.log(response);
             yield put({
                 type: 'save',
-                payload: data,
+                payload: response,
             });
         },
     },
