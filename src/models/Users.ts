@@ -20,7 +20,7 @@ export interface Users {
 	phoneNumber?: string,
 	email?: string,
 	username?: string,
-	entryPoint?: string,
+	entryPoint?: any,
 	status?: boolean,
 	createdBy?: string,
 	dateCreated?: string,

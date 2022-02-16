@@ -14,14 +14,12 @@ export interface Loading {
 
 export interface Locality {
     id?: string,
-    district: any,
-    name: string,
-    description: string,
-    status: boolean,
-    createdBy: string,
-    detaCreated: string,
-    updatedBy: string,
-    dateUpdated: string
+    district?: any,
+    name?: string,
+    description?: string,
+    status?: boolean,
+    createdBy?: string,
+    updatedBy?: string,
 }
 
 export interface LocalityModelState {
@@ -36,7 +34,7 @@ export interface LocalityModelType {
         fetch: Effect;
     };
     reducers: {
-
+        save: Reducer<LocalityModelState>;
     }
 }
 
@@ -60,11 +58,17 @@ const LocalityModel: LocalityModelType = {
                 type: 'save',
                 payload: data,
             });
-        }
+        },
+
     },
 
     reducers: {
-
+        save(state, { payload }) {
+            return {
+              ...state,
+              locality: payload
+            };
+        },
     }
 }
 
