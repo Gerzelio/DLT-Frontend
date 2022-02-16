@@ -75,7 +75,7 @@ export default class User extends Component<UsersProps, UsersState>{
                             keyboardType='default'
                             name="email"
                             returnKeyType="send" 
-                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state, email: value }}) }}
+                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, email: value }}) }}
                         />
                         
                         <Text style={styles.txtLabel}>Username</Text>    
@@ -85,7 +85,7 @@ export default class User extends Component<UsersProps, UsersState>{
                             keyboardType='default'
                             name="username"
                             returnKeyType="send" 
-                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state, username: value }}) }}
+                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, username: value }}) }}
                         />
                                         
                                                
@@ -96,7 +96,7 @@ export default class User extends Component<UsersProps, UsersState>{
                             keyboardType='default'
                             name="surname"
                             returnKeyType="send"
-                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state, surname: value }}) }}
+                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, surname: value }}) }}
                         />
                         
                         <Text style={styles.txtLabel}>Nome</Text>    
@@ -106,7 +106,7 @@ export default class User extends Component<UsersProps, UsersState>{
                             keyboardType='default'
                             name="name"
                             returnKeyType="send"
-                            onChangeText={(value : string)=> { this.setState({ account: { ...this.state, name: value }}) }}
+                            onChangeText={(value : string)=> { this.setState({ account: { ...this.state.account, name: value }}) }}
                         />
                         
                         <Text style={styles.txtLabel}>Telemóvel</Text>    
@@ -116,7 +116,7 @@ export default class User extends Component<UsersProps, UsersState>{
                             keyboardType='default'
                             name="phoneNumber"
                             returnKeyType="send"
-                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state, phoneNumber: value }}) }}
+                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, phoneNumber: value }}) }}
                         />
                         
                                                
@@ -144,7 +144,7 @@ export default class User extends Component<UsersProps, UsersState>{
                         <Picker
                             // selectedValue={selectedLanguage}
                             onValueChange={(itemValue, itemIndex) =>
-                                { this.setState({ account:{ ...this.state, locality: itemValue }}) }
+                                { this.setState({ account:{ ...this.state.account, locality: itemValue }}) }
                             }>
                             <Picker.Item label="Unidade Sanitaria" value="0" />
                             <Picker.Item label="Escola" value="1" />
@@ -155,7 +155,7 @@ export default class User extends Component<UsersProps, UsersState>{
                         <Picker
                             // selectedValue={selectedLanguage}
                             onValueChange={(itemValue, itemIndex) =>
-                                { this.setState({ account:{ ...this.state, partners: itemValue }}) }
+                                { this.setState({ account:{ ...this.state.account, partners: itemValue }}) }
                             }>
                             <Picker.Item label="ABT - ECHO" value="0" />
                             <Picker.Item label="FGH" value="1" />
@@ -165,7 +165,7 @@ export default class User extends Component<UsersProps, UsersState>{
                         <Picker
                             // selectedValue={selectedLanguage}
                             onValueChange={(itemValue, itemIndex) =>
-                                { this.setState({ account:{ ...this.state, profiles: itemValue }}) }
+                                { this.setState({ account:{ ...this.state.account, profiles: itemValue }}) }
                             }>
                             <Picker.Item label="US" value="0" />
                             <Picker.Item label="CM" value="1" />
@@ -175,7 +175,7 @@ export default class User extends Component<UsersProps, UsersState>{
                         <Picker
                             // selectedValue={selectedLanguage}
                             onValueChange={(itemValue, itemIndex) =>
-                                { this.setState({ account:{ ...this.state, us: itemValue }}) }
+                                { this.setState({ account:{ ...this.state.account, us: itemValue }}) }
                             }>
                             <Picker.Item label="CS da Matola" value="0" />
                             <Picker.Item label="CS 1 de junho" value="1" />
