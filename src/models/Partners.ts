@@ -4,17 +4,17 @@ import { query } from '../services/partners';
 
 
 export interface Partners {
-    id?: string,
+    id?: any,
     name?: string,
     abbreviation?: string,
     description?: string,
     partnerType?: string,
-    logo?: string,
-    status?: string,
-    createdBy?: string,
-    updatedBy?: string,
+    logo?: any,
+    status?: any,
+    createdBy?: any,
+    updatedBy?: any,
     dateCreated: string,
-    dateUpdated: string
+    dateUpdated: any
 }
 
 export interface PartnersModelState{
@@ -41,7 +41,7 @@ const PartnersModel: PartnersModelType = {
     effects: {
         *fetch({ payload }, { call, put }) {
             const response = yield call(query, payload);
-            console.log(response);
+            
             yield put({
                 type: 'save',
                 payload: response,
@@ -50,9 +50,22 @@ const PartnersModel: PartnersModelType = {
     },
     reducers: {
         save(state, { payload }) {
+            console.log(payload);
             return {
               ...state,
-              partners: payload
+              partners: [{
+                  id: 1,
+                  name: "CCS",
+                  abbreviation: "CCS",
+                  description: "CCS",
+                  partnerType: "ONG",
+                  logo: null,
+                  status: 1,
+                  createdBy: 1,
+                  dateCreated: "2021-01-01T06:10:22.000+00:00",
+                  updatedBy: null,
+                  dateUpdated: null
+              }]
             };
         },
     }

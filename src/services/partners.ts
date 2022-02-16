@@ -13,4 +13,5 @@ export async function query(payload?: PartnersFilter){
         url = '/api/partners';
     }
     const res = await select(url);
+    return res;
 }

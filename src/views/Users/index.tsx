@@ -50,14 +50,24 @@ interface UsersState{
       partners: PartnersModelState;
     }) => ({
       users,
-      partners
+      partners: partners
     }),
   )
 export default class User extends Component<UsersProps, UsersState>{
+    constructor(props: any) {
+        super(props) 
+        this.state = {
+            account: {}
+        }  
+        const { dispatch } = this.props;
 
-    state: UsersState = {
-        account: {},
-    };
+        dispatch({
+            type: 'partners/fetch',
+        });
+
+    } 
+
+    
 
     validate_fields = () => {
         
@@ -77,21 +87,19 @@ export default class User extends Component<UsersProps, UsersState>{
         }
     }
 
-    
+    /*
     componentDidMount(){
         const { dispatch } = this.props;
 
         dispatch({
             type: 'partners/fetch',
         });
-
-       
-
-    }
+    } 
+    */
 
     render(){
         const { userLogged, partners } = this.props;
-
+        console.log(partners);
         return(
             
             <KeyboardAvoidingView>
@@ -173,7 +181,9 @@ export default class User extends Component<UsersProps, UsersState>{
                                 { this.setState({ account:{ ...this.state.account, partners: itemValue }}) }
                             }
                         >
-                           
+                            {partners.map((partner, i) => {
+                                return <Picker.Item key={i} value={partner.id} label={partner.name} />
+                            })}
 
                         </Picker>
                         

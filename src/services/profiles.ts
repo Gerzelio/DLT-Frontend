@@ -13,4 +13,5 @@ export async function query(payload?: ProfileFilter){
         url = '/api/profiles';
     }
     const res = await select(url);
+    return res;
 }
