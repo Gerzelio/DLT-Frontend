@@ -4,7 +4,7 @@ import { Dispatch, AnyAction } from 'redux';
 import { connect } from 'dva';
 import { View, KeyboardAvoidingView, 
         Image, TextInput, TouchableOpacity, 
-        Text, Button, Platform} 
+        Text, Button, Platform, ScrollView} 
         from 'react-native';
 import { AuthModelState, Loading } from '../../models/Auth'
 // import { Form } from '@unform/mobile';
@@ -69,10 +69,12 @@ export default class Login extends Component<LoginProps, LoginState>{
 
     render(){
         return(
-            <KeyboardAvoidingView style={styles.background}>
+            <View style={styles.background}>
                 <View style={styles.header}>
-    
+                    
                 </View>
+                <KeyboardAvoidingView>
+                <ScrollView  contentContainerStyle={styles.scrollView}>
                 <View style={styles.containerPage}>
                     <View style={styles.containerLogo}>
                         <Text>Sign in</Text>
@@ -125,6 +127,8 @@ export default class Login extends Component<LoginProps, LoginState>{
                         <Text>{"Password:"+this.state.password}</Text>
                     </View>
                 </View>
+                </ScrollView>
+                
                 <View style={styles.container}>
                     <Text></Text>
                     <Image source={require('../../../assets/partners/Dreams_moz_icap_logo.png')}  style={styles.partners}/>
@@ -137,7 +141,10 @@ export default class Login extends Component<LoginProps, LoginState>{
                     <Image source={require('../../../assets/partners/DREAMS_moz_elizabethglaser_logo.png')}  style={styles.partners}/>                   
     
                 </View>
-            </KeyboardAvoidingView>
+                
+                </KeyboardAvoidingView>
+                {/* // { </ScrollView> */}
+             </View> 
         )
     }
 

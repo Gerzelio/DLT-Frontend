@@ -4,25 +4,37 @@ import { Dimensions, StyleSheet} from 'react-native';
 const { width, height} = Dimensions.get("screen");
 
 const styles = StyleSheet.create({
-    background:{
+    background:{       
+        width: '100%',
         flex:1,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#EEEEEE',
     },
-    header:{             
+    scrollView:{
+        // flex:1,       
         width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#EEEEEE',
+    },
+    header:{             
+        width: '100%',     
+        // width: 2000,
         // flex:1,
-        height: 50,
+        height: 80,
+        // marginTop: -200,
         backgroundColor: '#009587',
         alignItems: 'flex-start',
         justifyContent: 'center',
     },
     containerPage:{
-        flex:1,
+        // flex:1,
         // backgroundColor: '#009587',
+        margin: 10,
         marginTop: 20,   
-        width: '32%',
+        // width: '32%', 
+        width: 380,
         shadowColor: '#000',
         shadowOffset:{
             width: 2,
@@ -50,9 +62,9 @@ const styles = StyleSheet.create({
     },
     container:{           
         width: '100%',        
-        flex: 0.2,
+        // flex: 0.2,
         padding: 2,
-        marginTop: 200,
+        // marginTop: 200,
         alignItems: 'center',
         justifyContent: 'flex-end',
         backgroundColor: '#fff',
@@ -60,12 +72,12 @@ const styles = StyleSheet.create({
 
     },
     input:{
-        // color: '#222',
-        fontSize: 13,
-        padding:10,
-        borderEndColor: '#009587',
-        borderColor:'#ECECEC',
-        borderBottomWidth:1,
+        color: '#222',
+        // fontSize: 13,
+        // padding:10,
+        // borderEndColor: '#009587',
+        borderColor:'#222',
+        // borderBottomWidth:1,
     },
     btnSubmit:{
         backgroundColor:'#009587',
