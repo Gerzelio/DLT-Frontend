@@ -6,35 +6,55 @@ import { View, KeyboardAvoidingView, ScrollView,
         TextInput, TouchableOpacity, 
         Text, Button} 
         from 'react-native';
+import {Picker} from '@react-native-picker/picker';
 import { UsersModelState, Users } from '../../models/Users';  
-import { AuthModelState } from "../../models/Auth";      
-import Dashboard from "../../components/Dashboard";
+import { AuthModelState } from "../../models/Auth";
+import { PartnersModelState, Partners } from '../../models/Partners';
+import { ProfilesModelState, Profiles } from '../../models/Profiles';
+import { UsModelState, Us } from '../../models/Us';
+import { LocalityModelState, Locality } from '../../models/Locality'; 
+import Dashboard from "../../components/Dashboard";     
 
 import Input from "../../components/Inputs";
 // import DropDownPicker from 'react-native-dropdown-picker'
-import {Picker} from '@react-native-picker/picker';
+
 
 import styles from "./styles";
 
 interface UsersProps {
     dispatch: Dispatch<AnyAction>;
     userLogged: Users;
+    partners: PartnersModelState;
 }
 
 interface UsersState{
     account: Users,
 }
 
-@connect(({ users }: UsersModelState,
-    {loggedUser}:AuthModelState) => ({
-    submitting: users,
-    userLogged: loggedUser
-}))
+@connect(
+    ({
+        partners,
+    }: {
+        partners: PartnersModelState;
+    }) => ({
+        partners,
+    }),
+  )
 export default class User extends Component<UsersProps, UsersState>{
+    constructor(props: any) {
+        super(props) 
+        this.state = {
+            account: {}
+        }  
+        const { dispatch } = this.props;
 
-    state: UsersState = {
-        account: {},
-    };
+        dispatch({
+            type: 'partners/fetch',
+        });
+
+    } 
+
+    
 
     validate_fields = () => {
         
@@ -47,16 +67,25 @@ export default class User extends Component<UsersProps, UsersState>{
 
         if (this.validate_fields() && dispatch) {
             console.log(account);
-            dispatch({
+           /* dispatch({
                 type: 'users/create',
                 payload: account
-            })
+            })*/
         }
     }
 
+    
+    componentDidMount(){
+        const { dispatch } = this.props;
+
+        dispatch({
+            type: 'partners/fetch',
+        });
+    }
+
     render(){
-        const { userLogged } = this.props;
-        
+        const { userLogged, partners: { partners } } = this.props;
+
         return(
             <KeyboardAvoidingView  style={styles.background}>
                 <Dashboard />
@@ -158,12 +187,15 @@ export default class User extends Component<UsersProps, UsersState>{
                             <Text style={styles.txtLabel}>Parceiro</Text>
                             <Picker
                                 style={styles.dropDownPicker}
-                                // selectedValue={selectedLanguage}
                                 onValueChange={(itemValue, itemIndex) =>
                                     { this.setState({ account:{ ...this.state.account, partners: itemValue }}) }
-                                }>
-                                <Picker.Item label="ABT - ECHO" value="0" />
-                                <Picker.Item label="FGH" value="1" />
+                                }
+                            >
+                                { 
+                                    partners.map(partner => (
+                                        <Picker.Item key={partner.id} label={partner.name} value={partner.id} />
+                                    ))
+                                }  
                             </Picker>
                             
                             <Text style={styles.txtLabel}>profiles</Text>
