@@ -1,19 +1,13 @@
 import { Dispatch } from 'redux';
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { View, ActivityIndicator} from 'react-native';
+import { View, ActivityIndicator, Platform} from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Users, UsersModelState } from '../models/Users';
 import { AuthModelState } from '../models/Auth';
 //import AuthRoutes from '../routes/auth.routes';
 import AppRoutes from '../routes';
-import DrawerNavigation from '../routes/DrawerNavigator';
-import AuthNavigation from '../routes/AuthNavigator'
 
-
-/*export interface ConnectProps<T = {}> extends Partial<RouterTypes<Route, T>> {
-    dispatch?: Dispatch;
-}*/
 
 interface SecurityLayoutProps {
     dispatch?: Dispatch;
@@ -62,7 +56,6 @@ class SecurityContext extends Component<SecurityLayoutProps, SecurityState> {
         }
         
         return <AppRoutes />
-       // return isLogged ? <DrawerNavigation /> : <AuthNavigation />;
        
     }
 
