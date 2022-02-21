@@ -2,7 +2,7 @@
 import React, { useState, Component } from "react";
 import { Dispatch, AnyAction } from 'redux';
 import { connect } from 'dva';
-import { View, KeyboardAvoidingView, 
+import { View, KeyboardAvoidingView, ScrollView,
         TextInput, TouchableOpacity, 
         Text, Button} 
         from 'react-native';
@@ -12,7 +12,8 @@ import { AuthModelState } from "../../models/Auth";
 import { PartnersModelState, Partners } from '../../models/Partners';
 import { ProfilesModelState, Profiles } from '../../models/Profiles';
 import { UsModelState, Us } from '../../models/Us';
-import { LocalityModelState, Locality } from '../../models/Locality';      
+import { LocalityModelState, Locality } from '../../models/Locality'; 
+import Dashboard from "../../components/Dashboard";     
 
 import Input from "../../components/Inputs";
 // import DropDownPicker from 'react-native-dropdown-picker'
@@ -86,135 +87,146 @@ export default class User extends Component<UsersProps, UsersState>{
         const { userLogged, partners: { partners } } = this.props;
 
         return(
-            
-            <KeyboardAvoidingView>
-                <View>
-    
-                </View>
-                <View >
-                    <View>
-                        <Text>Credentials will be sent to the user by email. A password will be generated automatically if not provided.</Text>
-                    </View>
+            <KeyboardAvoidingView  style={styles.background}>
+                <Dashboard />
+                <ScrollView>
                     <View >
-                        <Text style={styles.txtLabel}>E-mail</Text>    
-                        <Input 
-                            styles={styles.input}
-                            autoCorrect={false} 
-                            autoCapitalize='none' 
-                            keyboardType='default'
-                            name="email"
-                            returnKeyType="send" 
-                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, email: value }}) }}
-                        />
-                        
-                        <Text style={styles.txtLabel}>Username</Text>    
-                        <Input 
-                            autoCorrect={false} 
-                            autoCapitalize='none' 
-                            keyboardType='default'
-                            name="username"
-                            returnKeyType="send" 
-                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, username: value }}) }}
-                        />
-                                        
-                                               
-                        <Text style={styles.txtLabel}>Apelido</Text>    
-                        <Input 
-                            autoCorrect={false} 
-                            autoCapitalize='none' 
-                            keyboardType='default'
-                            name="surname"
-                            returnKeyType="send"
-                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, surname: value }}) }}
-                        />
-                        
-                        <Text style={styles.txtLabel}>Nome</Text>    
-                        <Input 
-                            autoCorrect={false} 
-                            autoCapitalize='none' 
-                            keyboardType='default'
-                            name="name"
-                            returnKeyType="send"
-                            onChangeText={(value : string)=> { this.setState({ account: { ...this.state.account, name: value }}) }}
-                        />
-                        
-                        <Text style={styles.txtLabel}>Telemóvel</Text>    
-                        <Input 
-                            autoCorrect={false} 
-                            autoCapitalize='none' 
-                            keyboardType='default'
-                            name="phoneNumber"
-                            returnKeyType="send"
-                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, phoneNumber: value }}) }}
-                        />
-                         
-                        <Text style={styles.txtLabel}>Ponto de Entrada</Text>
-                        
-                        <Picker
-                            // selectedValue={selectedLanguage}
-                            onValueChange={(itemValue, itemIndex) =>
-                                { this.setState({ account:{ ...this.state.account, entryPoint: itemValue }}) }
-                            }>
-                            <Picker.Item label="Unidade Sanitaria" value="0" />
-                            <Picker.Item label="Escola" value="1" />
-                            <Picker.Item label="Comunidade" value="1" />
-                        </Picker>
-
-                        <Text style={styles.txtLabel}>Parceiro</Text>
-                        <Picker
-                            onValueChange={(itemValue, itemIndex) =>
-                                { this.setState({ account:{ ...this.state.account, partners: itemValue }}) }
-                            }
-                        >
-                            { 
-                                partners.map(partner => (
-                                    <Picker.Item key={partner.id} label={partner.name} value={partner.id} />
-                                ))
-                            }
-                           
-
-                        </Picker>
-                        
-                        <Text style={styles.txtLabel}>profiles</Text>
-                        <Picker
-                            // selectedValue={selectedLanguage}
-                            onValueChange={(itemValue, itemIndex) =>
-                                { this.setState({ account:{ ...this.state.account, profiles: itemValue }}) }
-                            }>
+                        <View style={styles.containerForm}>                        
+                            <View style={styles.formTitle}>
+                                <Text style={styles.textTitle}>Credentials will be sent to the user by email. A password will be generated automatically if not provided.</Text>
+                            </View>
+                            <Text style={styles.txtLabel}>E-mail</Text>    
+                            <TextInput
+                                style={styles.input}
+                                autoCorrect={false} 
+                                autoCapitalize='none' 
+                                keyboardType='default'
+                                // name="email"
+                                returnKeyType="send" 
+                                onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, email: value }}) }}
+                            />
                             
-                        </Picker>
-                        
-                        <Text style={styles.txtLabel}>Ponto de Referencias</Text>
-                        <Picker
-                            // selectedValue={selectedLanguage}
-                            onValueChange={(itemValue, itemIndex) =>
-                                { this.setState({ account:{ ...this.state.account, us: itemValue }}) }
-                            }>
-                         
-                        </Picker>
-
-                        <Text style={styles.txtLabel}>Posto Administrativo </Text>
-                        <Picker
-                            // selectedValue={selectedLanguage}
-                            onValueChange={(itemValue, itemIndex) =>
-                                { this.setState({ account:{ ...this.state.account, locality: itemValue }}) }
-                            }>
-                          
-                        </Picker>
+                            <Text style={styles.txtLabel}>Username</Text>    
+                            <TextInput 
+                                style={styles.input}
+                                autoCorrect={false} 
+                                autoCapitalize='none' 
+                                keyboardType='default'
+                                // name="username"
+                                returnKeyType="send" 
+                                onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, username: value }}) }}
+                            />
+                                            
+                                                
+                            <Text style={styles.txtLabel}>Apelido</Text>    
+                            <TextInput  
+                                style={styles.input}
+                                autoCorrect={false} 
+                                autoCapitalize='none' 
+                                keyboardType='default'
+                                // name="surname"
+                                returnKeyType="send"
+                                onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, surname: value }}) }}
+                            />
                             
-                        <TouchableOpacity style={styles.btnSubmit} onPress={() => this.handlerSave()}>
-                            <Text style={styles.txtLabel}>Save</Text>
-                        </TouchableOpacity>
-                        {/* <Button onPress={""} title='Save' /> */}
-                        {/* <Text>{"E-mail: "+this.state.email}</Text>
-                        <Text>{"Username: "+this.state.username}</Text>
-                        <Text>{"Password: "+this.state.password}</Text>
-                        <Text>{"Name: "+this.state.name}</Text>
-                        <Text>{"Website: "+this.state.website}</Text>
-                        <Text>{"Location: "+this.state.location}</Text>
-                        <Text>{"Bio: "+this.state.bio}</Text> */}
+                            <Text style={styles.txtLabel}>Nome</Text>    
+                            <TextInput  
+                                style={styles.input}
+                                autoCorrect={false} 
+                                autoCapitalize='none' 
+                                keyboardType='default'
+                                // name="name"
+                                returnKeyType="send"
+                                onChangeText={(value : string)=> { this.setState({ account: { ...this.state.account, name: value }}) }}
+                            />
+                            
+                            <Text style={styles.txtLabel}>Telemóvel</Text>    
+                            <TextInput  
+                                style={styles.input}
+                                autoCorrect={false} 
+                                autoCapitalize='none' 
+                                keyboardType='default'
+                                // name="phoneNumber"
+                                returnKeyType="send"
+                                onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, phoneNumber: value }}) }}
+                            />
+                            
+                                                
+                            {/* <Text style={styles.txtLabel}>Bio</Text>    
+                            <Input 
+                                autoCorrect={false} 
+                                autoCapitalize='none' 
+                                keyboardType='default'
+                                name="bio"
+                                returnKeyType="send"
+                                onChangeText={(value : string)=> { this.setState({ bio: value }) }}/> */}
+                                
+                            <Text style={styles.txtLabel}>Ponto de Entrada</Text>
+                            {/* <DropDownPicker
+                                items={[
+                                    {label: 'English', value: '1'},
+                                    {label: 'Deutsch', value: '2'},
+                                    {label: 'French', value: '3'},
+                                ]}
+                                // defaultIndex={0}
+                                containerStyle={{height: 40}}
+                                onChangeItem={(item : string) => { this.setState({ account:{ ...this.state, locality: item }}) }}
+                            /> */}
+
+                            <Picker 
+                                style={styles.dropDownPicker}
+                                // selectedValue={selectedLanguage}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    { this.setState({ account:{ ...this.state.account, locality: itemValue }}) }
+                                }>
+                                <Picker.Item label="Unidade Sanitaria" value="0" />
+                                <Picker.Item label="Escola" value="1" />
+                                <Picker.Item label="Comunidade" value="1" />
+                            </Picker>
+
+                            <Text style={styles.txtLabel}>Parceiro</Text>
+                            <Picker
+                                style={styles.dropDownPicker}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    { this.setState({ account:{ ...this.state.account, partners: itemValue }}) }
+                                }
+                            >
+                                { 
+                                    partners.map(partner => (
+                                        <Picker.Item key={partner.id} label={partner.name} value={partner.id} />
+                                    ))
+                                }  
+                            </Picker>
+                            
+                            <Text style={styles.txtLabel}>profiles</Text>
+                            <Picker
+                                style={styles.dropDownPicker}
+                                // selectedValue={selectedLanguage}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    { this.setState({ account:{ ...this.state.account, profiles: itemValue }}) }
+                                }>
+                                <Picker.Item label="US" value="0" />
+                                <Picker.Item label="CM" value="1" />
+                            </Picker>
+                            
+                            <Text style={styles.txtLabel}>Ponto de Referencias</Text>
+                            <Picker
+                                style={styles.dropDownPicker}
+                                // selectedValue={selectedLanguage}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    { this.setState({ account:{ ...this.state.account, us: itemValue }}) }
+                                }>
+                                <Picker.Item label="CS da Matola" value="0" />
+                                <Picker.Item label="CS 1 de junho" value="1" />
+                            </Picker>
+                            <View style={styles.btnDiv}>
+                                <TouchableOpacity style={styles.btnSubmit} onPress={() => this.handlerSave()}>
+                                    <Text style={styles.txtSubmit}>Save</Text>
+                                </TouchableOpacity>                            
+                            </View>  
+                        </View>
                     </View>
-                </View>
+                </ScrollView>
             </KeyboardAvoidingView>
         )
     }
