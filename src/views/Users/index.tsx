@@ -23,41 +23,37 @@ import styles from "./styles";
 interface UsersProps {
     dispatch: Dispatch<AnyAction>;
     userLogged: Users;
-    partners: Partners[][];
+    partners: PartnersModelState;
 }
 
 interface UsersState{
     account: Users,
 }
-/*
-@connect(( 
-            {loggedUser}:AuthModelState,
-            { partners }: PartnersModelState,
-) => ({
-
-    userLogged: loggedUser,
-    partners: partners,
-}))
-*/
-
 
 @connect(
     ({
-      users,
-      partners
+        partners,
     }: {
-      users: UsersModelState;
-      partners: PartnersModelState;
+        partners: PartnersModelState;
     }) => ({
-      users,
-      partners
+        partners,
     }),
   )
 export default class User extends Component<UsersProps, UsersState>{
+    constructor(props: any) {
+        super(props) 
+        this.state = {
+            account: {}
+        }  
+        const { dispatch } = this.props;
 
-    state: UsersState = {
-        account: {},
-    };
+        dispatch({
+            type: 'partners/fetch',
+        });
+
+    } 
+
+    
 
     validate_fields = () => {
         
@@ -84,13 +80,10 @@ export default class User extends Component<UsersProps, UsersState>{
         dispatch({
             type: 'partners/fetch',
         });
-
-       
-
     }
 
     render(){
-        const { userLogged, partners } = this.props;
+        const { userLogged, partners: { partners } } = this.props;
 
         return(
             
@@ -174,9 +167,10 @@ export default class User extends Component<UsersProps, UsersState>{
                             }
                         >
                             { 
-                                Object.values(partners)[0].map(partner => (
-                                <Picker.Item label={partner.name} value={partner.id} />
-                            ))}
+                                partners.map(partner => (
+                                    <Picker.Item key={partner.id} label={partner.name} value={partner.id} />
+                                ))
+                            }
                            
 
                         </Picker>
@@ -187,7 +181,7 @@ export default class User extends Component<UsersProps, UsersState>{
                             onValueChange={(itemValue, itemIndex) =>
                                 { this.setState({ account:{ ...this.state.account, profiles: itemValue }}) }
                             }>
-                       
+                            
                         </Picker>
                         
                         <Text style={styles.txtLabel}>Ponto de Referencias</Text>
