@@ -17,8 +17,7 @@ export interface Loading {
 }
 
 export interface AuthModelState{
-    loading?: Loading,
-    loggedUser?: Users,
+    loggedUser: Users,
     logged: boolean,
 }
 
@@ -38,25 +37,18 @@ export interface AuthModelType {
 const AuthModel: AuthModelType = {
     namespace: 'auth',
     state: {
-        loading: {
-            effects:{
-                'auth/login':true
-            },
-            models:{}
-        },
-        loggedUser: undefined,
+        loggedUser: {},
         logged: false
     },
     
     effects: {
         *login({ payload }, { call, put }) {
             const response = yield call(authenticate, payload);
-
+            
             yield put({
                 type: 'changeLoginStatus',
                 payload: response,
             });
-
             const { status, data } = response;
 
             /* update localstorage */
@@ -76,6 +68,7 @@ const AuthModel: AuthModelType = {
     },
     reducers: {
         changeLoginStatus(state, { payload }) {
+
             return {
               ...state,
               logged: payload.status === 200 ? true : false,
@@ -87,4 +80,3 @@ const AuthModel: AuthModelType = {
 }
 
 export default AuthModel;
-

@@ -16,7 +16,7 @@ const Drawer = createDrawerNavigator();
 
 const app = dva({
     initialState: {},
-    models: [UserModel, Login, PartnersModel, ProfilesModel, usModel, LocalityModel],
+    models: [Login, UserModel, PartnersModel, ProfilesModel, usModel, LocalityModel],
     onError(e: any) {
       console.log('onError', e)
     },
