@@ -13,4 +13,5 @@ export async function query(payload?: UsFilter){
         url = '/api/us';
     }
     const res = await select(url);
+    return res;
 }

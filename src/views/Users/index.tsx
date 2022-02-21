@@ -23,7 +23,7 @@ import styles from "./styles";
 interface UsersProps {
     dispatch: Dispatch<AnyAction>;
     userLogged: Users;
-    partners: Partners[];
+    partners: Partners[][];
 }
 
 interface UsersState{
@@ -173,6 +173,10 @@ export default class User extends Component<UsersProps, UsersState>{
                                 { this.setState({ account:{ ...this.state.account, partners: itemValue }}) }
                             }
                         >
+                            { 
+                                Object.values(partners)[0].map(partner => (
+                                <Picker.Item label={partner.name} value={partner.id} />
+                            ))}
                            
 
                         </Picker>
