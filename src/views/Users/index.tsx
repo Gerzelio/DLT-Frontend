@@ -28,6 +28,12 @@ interface UsersProps {
 
 interface UsersState{
     account: Users,
+    selectedEntryPoint: number,
+    selectedPartner: number,
+    selectedProfile: number,
+    selectedLocality: number,
+    selectedUs: number,
+    selectedStatus: number,
 }
 
 @connect(
@@ -52,7 +58,13 @@ export default class User extends Component<UsersProps, UsersState>{
     constructor(props: any) {
         super(props) 
         this.state = {
-            account: {}
+            account: {},
+            selectedEntryPoint: 0,
+            selectedPartner: 0,
+            selectedProfile: 0,
+            selectedLocality: 0,
+            selectedUs: 0,
+            selectedStatus: 1,
         }  
         const { dispatch } = this.props;
 
@@ -83,7 +95,6 @@ export default class User extends Component<UsersProps, UsersState>{
         const { dispatch } = this.props;
 
         if (this.validate_fields() && dispatch) {
-           console.log(account);
            dispatch({
                 type: 'users/create',
                 payload: account
@@ -93,7 +104,6 @@ export default class User extends Component<UsersProps, UsersState>{
 
     render(){
         const { userLogged, partners: { partners }, profiles: { profiles }, us: { us }, localities: { localities } } = this.props;
-
         return(
             <KeyboardAvoidingView  style={styles.background}>
                 <Dashboard />
@@ -123,6 +133,17 @@ export default class User extends Component<UsersProps, UsersState>{
                                 // name="username"
                                 returnKeyType="send" 
                                 onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, username: value }}) }}
+                            />
+                            
+                            <Text style={styles.txtLabel}>Password</Text>    
+                            <TextInput 
+                                style={styles.input}
+                                autoCorrect={false} 
+                                autoCapitalize='none' 
+                                keyboardType='default'
+                                // name="username"
+                                returnKeyType="send" 
+                                onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, password: value }}) }}
                             />
                                             
                                                 
@@ -162,22 +183,36 @@ export default class User extends Component<UsersProps, UsersState>{
                             <Text style={styles.txtLabel}>Ponto de Entrada</Text>
                             <Picker 
                                 style={styles.dropDownPicker}
-                                // selectedValue={selectedLanguage}
+                                selectedValue={this.state.selectedEntryPoint}
                                 onValueChange={(itemValue, itemIndex) =>
-                                    { this.setState({ account:{ ...this.state.account, locality: itemValue }}) }
+                                    { 
+                                        this.setState({selectedEntryPoint: itemIndex})
+                                        if (itemIndex !== 0){
+                                            this.setState({ account:{ ...this.state.account, entryPoint: itemValue }}) 
+                                        }
+                                    }
                                 }>
-                                <Picker.Item label="Unidade Sanitaria" value="0" />
-                                <Picker.Item label="Escola" value="1" />
-                                <Picker.Item label="Comunidade" value="1" />
+                                <Picker.Item label="--Seleccione--" value="0" />
+                                <Picker.Item label="Unidade Sanitaria" value="1" />
+                                <Picker.Item label="Escola" value="2" />
+                                <Picker.Item label="Comunidade" value="3" />
                             </Picker>
 
                             <Text style={styles.txtLabel}>Parceiro</Text>
                             <Picker
                                 style={styles.dropDownPicker}
+                                selectedValue={this.state.selectedPartner}
                                 onValueChange={(itemValue, itemIndex) =>
-                                    { this.setState({ account:{ ...this.state.account, partners: itemValue }}) }
+                                    { 
+                                        this.setState({selectedPartner: itemIndex})
+                                        if (itemIndex !== 0){
+                                            this.setState({ account:{ ...this.state.account, partners: {"id": itemValue} }}) 
+                                        }
+                                    }
                                 }
                             >
+
+                                <Picker.Item label="--Seleccione--" value="0" />
                                 { 
                                     partners.map(partner => (
                                         <Picker.Item key={partner.id} label={partner.name} value={partner.id} />
@@ -188,11 +223,19 @@ export default class User extends Component<UsersProps, UsersState>{
                             <Text style={styles.txtLabel}>Perfil</Text>
                             <Picker
                                 style={styles.dropDownPicker}
-                                // selectedValue={selectedLanguage}
+                                selectedValue={this.state.selectedProfile}
                                 onValueChange={(itemValue, itemIndex) =>
-                                    { this.setState({ account:{ ...this.state.account, profiles: itemValue }}) }
+                                    { 
+                                        this.setState({selectedProfile: itemIndex})
+                                        if (itemIndex !== 0){
+                                            this.setState({ account:{ ...this.state.account, profiles:  {"id": itemValue} }}) 
+                                        }
+                                
+                                    }
                                 }
                             >
+
+                                <Picker.Item label="--Seleccione--" value="0" />
                                 { 
                                     profiles.map(profile => (
                                         <Picker.Item key={profile.id} label={profile.description} value={profile.id} />
@@ -203,11 +246,18 @@ export default class User extends Component<UsersProps, UsersState>{
                             <Text style={styles.txtLabel}>Localidade</Text>
                             <Picker
                                 style={styles.dropDownPicker}
-                                // selectedValue={selectedLanguage}
+                                selectedValue={this.state.selectedLocality}
                                 onValueChange={(itemValue, itemIndex) =>
-                                    { this.setState({ account:{ ...this.state.account, locality: itemValue }}) }
+                                    { 
+                                        this.setState({selectedLocality: itemIndex})
+                                        if (itemIndex !== 0){ 
+                                            this.setState({ account:{ ...this.state.account, locality:  {"id": itemValue} }}) 
+                                        }
+                                    }
                                 }
                             >
+
+                                <Picker.Item label="--Seleccione--" value="0" />
                                 { 
                                     localities.map(locality => (
                                         <Picker.Item key={locality.id} label={locality.name} value={locality.id} />
@@ -218,16 +268,39 @@ export default class User extends Component<UsersProps, UsersState>{
                             <Text style={styles.txtLabel}>US</Text>
                             <Picker
                                 style={styles.dropDownPicker}
-                                // selectedValue={selectedLanguage}
+                                selectedValue={this.state.selectedUs}
                                 onValueChange={(itemValue, itemIndex) =>
-                                    { this.setState({ account:{ ...this.state.account, us: itemValue }}) }
+                                    {
+                                        this.setState({selectedUs: itemIndex})
+                                        if (itemIndex !== 0){ 
+                                            this.setState({ account:{ ...this.state.account, us:  {"id": itemValue} }}) 
+                                        }
+                                    }
                                 }
                             >
+
+                                <Picker.Item label="--Seleccione--" value="0" />
                                 { 
                                     us.map(us => (
                                         <Picker.Item key={us.id} label={us.name} value={us.id} />
                                     ))
                                 }
+                            </Picker>
+                                
+                            <Text style={styles.txtLabel}>Estado</Text>
+                            <Picker 
+                                style={styles.dropDownPicker}
+                                selectedValue={this.state.selectedStatus}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    { 
+                                        this.setState({selectedStatus: itemIndex})
+                                        if (itemIndex !== 0){
+                                            this.setState({ account:{ ...this.state.account, entryPoint: itemValue }}) 
+                                        }
+                                    }
+                                }>
+                                <Picker.Item label="Inactivo" value="0" />
+                                <Picker.Item label="Activo" value="1" />
                             </Picker>
                             <View style={styles.btnDiv}>
                                 <TouchableOpacity style={styles.btnSubmit} onPress={() => this.handlerSave()}>
