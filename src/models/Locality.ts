@@ -24,7 +24,7 @@ export interface Locality {
 
 export interface LocalityModelState {
     loading?: Loading,
-    locality: Locality[]
+    localities: Locality[]
 }
 
 export interface LocalityModelType {
@@ -39,7 +39,7 @@ export interface LocalityModelType {
 }
 
 const LocalityModel: LocalityModelType = {
-    namespace: 'locality',
+    namespace: 'localities',
     
     state: {
         loading: {
@@ -48,15 +48,15 @@ const LocalityModel: LocalityModelType = {
             },
             models:{}
         },
-        locality: []
+        localities: []
     },
 
     effects: {
         *fetch({ payload }, { call, put }){
-            const {status, data} = yield call(query, payload);
+            const response = yield call(query, payload);
             yield put({
                 type: 'save',
-                payload: data,
+                payload: response,
             });
         },
 
@@ -66,7 +66,7 @@ const LocalityModel: LocalityModelType = {
         save(state, { payload }) {
             return {
               ...state,
-              locality: payload
+              localities: payload
             };
         },
     }
