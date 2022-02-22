@@ -295,7 +295,7 @@ export default class User extends Component<UsersProps, UsersState>{
                                     { 
                                         this.setState({selectedStatus: itemIndex})
                                         if (itemIndex !== 0){
-                                            this.setState({ account:{ ...this.state.account, entryPoint: itemValue }}) 
+                                            this.setState({ account:{ ...this.state.account, status: itemValue }}) 
                                         }
                                     }
                                 }>
