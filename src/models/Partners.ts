@@ -41,7 +41,6 @@ const PartnersModel: PartnersModelType = {
     effects: {
         *fetch({ payload }, { call, put }) {
             const response = yield call(query, payload);
-            console.log(response);
             yield put({
                 type: 'save',
                 payload: response,
