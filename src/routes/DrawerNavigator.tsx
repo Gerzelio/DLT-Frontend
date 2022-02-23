@@ -5,6 +5,7 @@ import { connect } from 'dva';
 import CustomDrawer from './components/CustomDrawer';
 import UsersScreen from "../views/Users";
 import HomeScreen from '../views/Home';
+import UsersListScreen from '../views/Demo2';
 
 
 const Drawer = createDrawerNavigator();
@@ -60,6 +61,13 @@ class DrawerNavigation extends Component<DrawerNavigationProps, DrawerNavigation
                     component={UsersScreen}  
                     options={{                     
                         title: 'Criar Utilizadores', 
+                        headerTitle: '',
+                    }} 
+                />
+                <Drawer.Screen name="UserList" 
+                    component={UsersListScreen}  
+                    options={{                     
+                        title: 'User List', 
                         headerTitle: '',
                     }} 
                 />
