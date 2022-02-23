@@ -1,84 +1,83 @@
-
 import { Dimensions, StyleSheet} from 'react-native';
 
 const { width, height} = Dimensions.get("screen");
 
 const styles = StyleSheet.create({
-    background:{
-        flex:1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#EEEEEE',
+    container: {
+      flex: 1,
+      backgroundColor: 'white',
     },
-    containerForm:{
-        padding: 30,
-        paddingBottom: 70,
-        // justifyContent: 'space-around',
-        backgroundColor: '#fff',
-        borderColor:'#CCCCCC',
-        borderWidth:1,
-        borderRadius: 5,
-        margin: 15,        
+    heading: {
+      height: 60,
+      backgroundColor: '#03A9F4',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
-    formTitle:{        
-        flexDirection: "row",
-        padding: 10,
-        backgroundColor: '#D9EDF7',
-        borderColor:'#BCE8F1',
-        borderWidth:1,
-        borderRadius: 5,
-        margin: 5,
+    headingTest: {
+      fontSize: 20,
+      color: 'white',
+      fontWeight: 'bold',
     },
-    textTitle:{
-        color: '#517E96',
+    list: {
+      margin: 5,
+      backgroundColor: 'white',
+      height:80,
+      justifyContent: 'space-around',
+      paddingLeft: 10,
+      elevation: 1
     },
-    input:{
-        color: '#222',
-        height:40,
-        fontSize: 14,
-        backgroundColor: '#fff',
-        borderColor:'#CCCCCC',
-        borderWidth:1,
-        marginHorizontal: 5,
-        paddingLeft: 10,
+    fab: {
+      position: 'absolute',
+      width: 56,
+      height: 56,
+      alignItems: 'center',
+      justifyContent: 'center',
+      right: 20,
+      bottom: 20,
+      backgroundColor: '#03A9F4',
+      borderRadius: 30,
+      elevation: 8
     },
-    dropDownPicker:{
-        color: '#222',
-        height:40,
-        fontSize: 14,
-        backgroundColor: '#fff',
-        borderColor:'#CCCCCC',
-        borderWidth:1, 
-        marginHorizontal: 5,       
+    fabIcon: {
+      fontSize: 40,
+      color: 'white'
     },
-    btnDiv:{
-        height: 50,
-        marginTop: 20,
-        alignItems: 'center',
-    },
-    btnSubmit:{
-        backgroundColor:'#008D4C',
-        // marginTop: 15,
-        width: '40%',
-        height: '100%',
-        borderRadius: 3,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginLeft: '1%',
-    },
-    txtSubmit:{
-        color: '#fff',
-        fontWeight: '500',
-    },
-    txtLabel:{
-        color: 'black',
-        fontSize: 14,
-        fontWeight: '700',
-        marginLeft: '1%',
-        marginTop: 15,
-        marginBottom: 5,
-    },
+    
+  backTextWhite: {
+      color: '#FFF',
+  },
+  rowFront: {
+      alignItems: 'center',
+      backgroundColor: '#CCC',
+      borderBottomColor: 'black',
+      borderBottomWidth: 1,
+      justifyContent: 'center',
+      height: 50,
+  },
+  rowBack: {
+      alignItems: 'center',
+      backgroundColor: '#DDD',
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingLeft: 15,
+  },
+  backRightBtn: {
+      alignItems: 'center',
+      bottom: 0,
+      justifyContent: 'center',
+      position: 'absolute',
+      top: 0,
+      width: 75,
+  },
+  backRightBtnLeft: {
+      backgroundColor: 'blue',
+      right: 75,
+  },
+  backRightBtnRight: {
+      backgroundColor: 'red',
+      right: 0,
+  },
+  });
 
-});
-
-export default styles;
+  export default styles;
