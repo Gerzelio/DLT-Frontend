@@ -68,10 +68,10 @@ const UsersModel: UsersModelType = {
 
     effects: {
         *fetch({ payload }, { call, put }) {
-            const {status, data} = yield call(query, payload);
+            const response = yield call(query, payload);
             yield put({
                 type: 'save',
-                payload: data,
+                payload: response,
             });
         },
 
