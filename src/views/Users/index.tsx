@@ -6,7 +6,10 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 
 import { UsersModelState } from '../../models/Users';
 
+import { navigate } from '../../routes/RootNavigation';
+
 import styles from './styles';
+import { TextInput } from 'react-native-gesture-handler';
 
 interface UsersProps {
     dispatch: Dispatch<AnyAction>;
@@ -89,6 +92,7 @@ class UsersMain extends React.Component<UsersProps> {
             <View style={styles.container}>
               <View style={styles.heading}>
                 <Text style={styles.headingTest}>Lista de Utilizadores</Text>
+                <TextInput ></TextInput>
               </View>
               <SwipeListView
                 data={users}
@@ -111,7 +115,7 @@ class UsersMain extends React.Component<UsersProps> {
                 </View>}
               />*/}
       
-              <TouchableOpacity onPress={() => alert('FAB clicked')} style={styles.fab}>
+              <TouchableOpacity onPress={() => navigate({name: "UserForm", params: {}}) } style={styles.fab}>
                 <Text style={styles.fabIcon}>+</Text>
               </TouchableOpacity>
             </View>
