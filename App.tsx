@@ -11,6 +11,7 @@ import usModel from './src/models/Us'
 import SecurityContext from './src/contexts/SecurityContext';
 import { navigationRef } from './src/routes/RootNavigation'; 
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NativeBaseProvider } from 'native-base';
 
 const Drawer = createDrawerNavigator();
 
@@ -24,8 +25,11 @@ const app = dva({
 
 const App = app.start(
     <NavigationContainer ref={navigationRef}>
-        
-            <SecurityContext />
+        <NativeBaseProvider>
+          <SecurityContext />
+        </NativeBaseProvider>
+
+            
 
         
     </NavigationContainer>
