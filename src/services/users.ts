@@ -28,6 +28,6 @@ export async function add(payload: UserParams) {
 }
   
 export async function edit(payload: UserParams) {
-    const res = await update('/api/users/'.concat(payload.id), payload);
+    const res = await update('/api/users/', payload);
     return res;
 }
