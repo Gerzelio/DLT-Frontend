@@ -42,11 +42,6 @@ class UsersMain extends React.Component<UsersProps> {
         }
     };
 
-    editRow = (rowMap: any, rowKey: any) => {
-        this.viewRow(rowMap, rowKey);
-        console.log("on Edit Row");
-    };
-
     onRowDidOpen = (rowKey: any) => {
         console.log('This row opened', rowKey);
     };
@@ -57,12 +52,11 @@ class UsersMain extends React.Component<UsersProps> {
             style={styles.rowFront}
             underlayColor={'#AAA'}
         >
-            
             <View>
-                  <Text>Name : {data.item.name} {data.item.surname}</Text>
-                  <Text>Username : {data.item.username}</Text>
-                  <Text>Parceiro : {data.item.partners?.name}</Text>
-                </View>
+                <Text>Name : {data.item.name} {data.item.surname}</Text>
+                <Text>Username : {data.item.username}</Text>
+                <Text>Parceiro : {data.item.partners?.name}</Text>
+            </View>
         </TouchableHighlight>
     );
 
@@ -77,13 +71,12 @@ class UsersMain extends React.Component<UsersProps> {
             </TouchableOpacity>
             <TouchableOpacity
                 style={[styles.backRightBtn, styles.backRightBtnRight]}
-                onPress={() => this.editRow(rowMap, data.item.key)}
+                onPress={() => navigate({name: "UserForm", params: {user: data.item}})}
             >
                 <Text style={styles.backTextWhite}>Edit</Text>
             </TouchableOpacity>
         </View>
     );
-
 
     render() {
         const { users: {users} } = this.props;
@@ -105,15 +98,6 @@ class UsersMain extends React.Component<UsersProps> {
                 previewOpenDelay={3000}
                 onRowDidOpen={this.onRowDidOpen}
               />
-              {/*
-              <FlatList
-                data={users}
-                renderItem={({ item }) => <View style={styles.list}>
-                  <Text>Name : {item.name} {item.surname}</Text>
-                  <Text>Username : {item.username}</Text>
-                  <Text>Parceiro : {item.partners?.name}</Text>
-                </View>}
-              />*/}
       
               <TouchableOpacity onPress={() => navigate({name: "UserForm", params: {}}) } style={styles.fab}>
                 <Text style={styles.fabIcon}>+</Text>
