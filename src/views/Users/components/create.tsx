@@ -24,6 +24,7 @@ interface UsersProps {
     profiles: ProfilesModelState;
     us: UsModelState;
     localities: LocalityModelState;
+    route: any;
 }
 
 interface UsersState{
@@ -33,7 +34,7 @@ interface UsersState{
     selectedProfile: number,
     selectedLocality: number,
     selectedUs: number,
-    selectedStatus: number,
+    selectedStatus?: number,
 }
 
 @connect(
@@ -55,18 +56,40 @@ interface UsersState{
     }),
   )
 export default class UsersForm extends Component<UsersProps, UsersState>{
+    user: Users;
+    transactionType: string;
+    buttonLabel: string;
     constructor(props: any) {
-        super(props) 
-        this.state = {
-            account: {},
-            selectedEntryPoint: 0,
-            selectedPartner: 0,
-            selectedProfile: 0,
-            selectedLocality: 0,
-            selectedUs: 0,
-            selectedStatus: 1,
-        }  
-        const { dispatch } = this.props;
+        super(props);  
+        const { dispatch, route } = this.props;
+        this.user = route.params.user;
+        
+        if (this.user){
+            this.state = {
+                account: this.user,
+                selectedEntryPoint: this.user.entryPoint,
+                selectedPartner: this.user.partners.id,
+                selectedProfile: this.user.profiles.id,
+                selectedLocality: this.user.locality.id,
+                selectedUs: this.user.us.id,
+                selectedStatus: this.user.status,
+            }
+            this.transactionType = 'users/update';
+            this.buttonLabel = 'Actualizar';
+        }
+        else {
+            this.state = {
+                account: {},
+                selectedEntryPoint: 0,
+                selectedPartner: 0,
+                selectedProfile: 0,
+                selectedLocality: 0,
+                selectedUs: 0,
+                selectedStatus: 1,
+            }
+            this.transactionType = 'users/create';
+            this.buttonLabel = 'Gravar';
+        }
 
         dispatch({
             type: 'partners/fetch',
@@ -83,27 +106,26 @@ export default class UsersForm extends Component<UsersProps, UsersState>{
 
     } 
 
-    
-
     validate_fields = () => {
         
         return true;
     }
 
-    handlerSave = () => {
+    handlerAction = () => {
         const { account } = this.state;
         const { dispatch } = this.props;
 
         if (this.validate_fields() && dispatch) {
            dispatch({
-                type: 'users/create',
+                type: this.transactionType,
                 payload: account
             })
         }
     }
 
     render(){
-        const { userLogged, partners: { partners }, profiles: { profiles }, us: { us }, localities: { localities } } = this.props;
+        const { partners: { partners }, profiles: { profiles }, us: { us }, localities: { localities } } = this.props;
+        
         return(
             <KeyboardAvoidingView  style={styles.background}>
                 <Dashboard />
@@ -120,6 +142,7 @@ export default class UsersForm extends Component<UsersProps, UsersState>{
                                 autoCapitalize='none' 
                                 keyboardType='default'
                                 // name="email"
+                                value={ this.state.account.email }
                                 returnKeyType="send" 
                                 onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, email: value }}) }}
                             />
@@ -131,6 +154,7 @@ export default class UsersForm extends Component<UsersProps, UsersState>{
                                 autoCapitalize='none' 
                                 keyboardType='default'
                                 // name="username"
+                                value={ this.state.account.username }
                                 returnKeyType="send" 
                                 onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, username: value }}) }}
                             />
@@ -141,8 +165,9 @@ export default class UsersForm extends Component<UsersProps, UsersState>{
                                 autoCorrect={false} 
                                 autoCapitalize='none' 
                                 keyboardType='default'
-                                // name="username"
-                                returnKeyType="send" 
+                                // name="username" 
+                                value={ this.state.account.password }
+                                returnKeyType="send"
                                 onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, password: value }}) }}
                             />
                                             
@@ -153,7 +178,8 @@ export default class UsersForm extends Component<UsersProps, UsersState>{
                                 autoCorrect={false} 
                                 autoCapitalize='none' 
                                 keyboardType='default'
-                                // name="surname"
+                                // name="surname" 
+                                value={ this.state.account.surname }
                                 returnKeyType="send"
                                 onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, surname: value }}) }}
                             />
@@ -164,7 +190,8 @@ export default class UsersForm extends Component<UsersProps, UsersState>{
                                 autoCorrect={false} 
                                 autoCapitalize='none' 
                                 keyboardType='default'
-                                // name="name"
+                                // name="name" 
+                                value={ this.state.account.name }
                                 returnKeyType="send"
                                 onChangeText={(value : string)=> { this.setState({ account: { ...this.state.account, name: value }}) }}
                             />
@@ -175,7 +202,8 @@ export default class UsersForm extends Component<UsersProps, UsersState>{
                                 autoCorrect={false} 
                                 autoCapitalize='none' 
                                 keyboardType='default'
-                                // name="phoneNumber"
+                                // name="phoneNumber" 
+                                value={ this.state.account.phoneNumber }
                                 returnKeyType="send"
                                 onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, phoneNumber: value }}) }}
                             />
@@ -302,11 +330,13 @@ export default class UsersForm extends Component<UsersProps, UsersState>{
                                 <Picker.Item label="Inactivo" value="0" />
                                 <Picker.Item label="Activo" value="1" />
                             </Picker>
+
                             <View style={styles.btnDiv}>
-                                <TouchableOpacity style={styles.btnSubmit} onPress={() => this.handlerSave()}>
-                                    <Text style={styles.txtSubmit}>Save</Text>
+                                <TouchableOpacity style={styles.btnSubmit} onPress={() => this.handlerAction()}>
+                                    <Text style={styles.txtSubmit}>{this.buttonLabel}</Text>
                                 </TouchableOpacity>                            
-                            </View>  
+                            </View>
+
                         </View>
                     </View>
                 </ScrollView>
