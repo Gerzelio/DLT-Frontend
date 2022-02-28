@@ -3,7 +3,7 @@ import {createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerCo
 import { AuthModelState  } from '../models/Auth';
 import { connect } from 'dva';
 import CustomDrawer from './components/CustomDrawer';
-import UsersScreen from "../views/Users";
+import UsersNavigator from "./UsersNavigator";
 import HomeScreen from '../views/Home';
 
 
@@ -57,7 +57,7 @@ class DrawerNavigation extends Component<DrawerNavigationProps, DrawerNavigation
                     }}
                 />
                 <Drawer.Screen name="Users" 
-                    component={UsersScreen}  
+                    component={UsersNavigator}  
                     options={{                     
                         title: 'Utilizadores', 
                         headerTitle: '',
