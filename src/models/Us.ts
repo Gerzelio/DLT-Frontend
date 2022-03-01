@@ -3,10 +3,10 @@ import { Reducer } from 'redux';
 import { query } from '../services/us';
 
 export interface Us {
-    id?: string,
+    id: string,
     usType?: any,
     code?: string,
-    name?: string,
+    name: string,
     abbreviation?: string,
     description?: string,
     latitude?: string,

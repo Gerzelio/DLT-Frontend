@@ -4,9 +4,10 @@ import { Dispatch, AnyAction } from 'redux';
 import { connect } from 'dva';
 import { View, KeyboardAvoidingView, 
         Image, TextInput, TouchableOpacity, 
-        Text, Button, Platform, ScrollView} 
+        Text, Platform, ScrollView} 
         from 'react-native';
 import { AuthModelState, Loading } from '../../models/Auth'
+
 // import { Form } from '@unform/mobile';
 // import { FormHandles } from '@unform/core'
 
@@ -74,7 +75,7 @@ export default class Login extends Component<LoginProps, LoginState>{
                     
                 </View>
                 <KeyboardAvoidingView>
-                <ScrollView  contentContainerStyle={styles.scrollView}>
+                    <ScrollView  contentContainerStyle={styles.scrollView}>
                 <View style={styles.containerPage}>
                     <View style={styles.containerLogo}>
                         <Text>Sign in</Text>
@@ -85,7 +86,7 @@ export default class Login extends Component<LoginProps, LoginState>{
                         </Text>
     
                         {/* <TextInput style={styles.input} placeholder="" autoCorrect={false} onChangeText={(value)=> { this.setState({ username: value }) }}/> */}
-                        
+                 
                         <Input 
                             autoCorrect={false} 
                             autoCapitalize='none' 

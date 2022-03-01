@@ -13,9 +13,9 @@ export interface Loading {
 }
 
 export interface Locality {
-    id?: string,
+    id: string,
     district?: any,
-    name?: string,
+    name: string,
     description?: string,
     status?: boolean,
     createdBy?: string,

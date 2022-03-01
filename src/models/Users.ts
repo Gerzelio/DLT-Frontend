@@ -22,7 +22,7 @@ export interface Users {
 	username?: string,
 	password?: string,
 	entryPoint?: any,
-	status?: number,
+	status?: any,
 	createdBy?: string,
 	dateCreated?: string,
 	updatedBy?: string,
