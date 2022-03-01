@@ -79,6 +79,44 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
 
+    user:{
+        width: Dimensions.get('window').width,
+        marginTop: 85,
+        // height: '1%',
+        // marginBottom: "35%",
+        // backgroundColor:'#fff',
+        // borderBottomStartRadius: 100,
+        // radius: 100,
+
+    },
+    userLogo:{
+        alignItems: 'center',
+        marginTop: -100,
+    },
+    userText: {
+        marginTop: 12,
+        alignItems: 'center',
+    },
+    username:{
+        fontSize: 25,
+        fontWeight: '600',
+    },
+    fab: {
+      position: 'absolute',
+      width: 56,
+      height: 56,
+      alignItems: 'center',
+      justifyContent: 'center',
+      right: 20,
+      bottom: 20,
+      backgroundColor: '#0c4a6e',
+      borderRadius: 30,
+      elevation: 8
+    },
+    fabIcon: {
+      fontSize: 40,
+      color: 'white'
+    },
 });
 
 export default styles;
