@@ -67,8 +67,8 @@ class UsersMain extends React.Component<UsersProps> {
             </HStack>
         </TouchableHighlight>
     );
-    
-/*
+
+ /*
     renderHiddenItem = (data: any, rowMap: any) => (
         <View style={styles.rowBack}>
             
@@ -88,10 +88,10 @@ class UsersMain extends React.Component<UsersProps> {
     );
  */   
     renderHiddenItem = (data: any, rowMap: any) => (
-  
+
             <HStack flex={1} pl={2}>
                 <Pressable px={4} ml="auto" bg="lightBlue.700" justifyContent="center" 
-                            onPress={() => this.viewRow(rowMap, data.item.key)} 
+                            onPress={() => navigate({name: "UserView", params: {user: data.item}})} 
                             _pressed={{opacity: 0.5}}
                 >
                     <Icon as={<Ionicons name="eye" />} color="gray.200" />
