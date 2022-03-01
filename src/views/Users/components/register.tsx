@@ -23,6 +23,7 @@ interface UsersProps {
     profiles: ProfilesModelState;
     us: UsModelState;
     localities: LocalityModelState;
+    route: any;
 }
 
 interface UsersState{
@@ -49,19 +50,38 @@ interface UsersState{
     }),
   )
 export default class UsersRegistrationForm extends Component<UsersProps, UsersState>{
+    user: Users;
+    transactionType: string;
+    buttonLabel: string;
+
     constructor(props: any) {
-        super(props) 
-        this.state = {
-            account: {
-                partners: {},
-                profiles:{},
-                locality:{},
-                us:{}
-            },
-            errors:{
+        super(props);
+        const { dispatch, route } = this.props;
+
+        this.user = route.params.user;
+
+        if (this.user){
+            this.state = {
+                account: this.user,
+                errors: {}
             }
-        }  
-        const { dispatch } = this.props;
+            this.transactionType = 'users/update';
+            this.buttonLabel = 'Actualizar';
+        }
+        else {
+            this.state = {
+                account: {
+                    partners: {},
+                    profiles:{},
+                    locality:{},
+                    us:{}
+                },
+                errors:{}
+            }
+            this.transactionType = 'users/create';
+            this.buttonLabel = 'Gravar';
+        }
+        
 
         dispatch({
             type: 'partners/fetch',
@@ -77,6 +97,7 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
         });
 
     } 
+    
 
     validate = () => {
         const { account, errors } = this.state;
@@ -182,14 +203,11 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
         const { dispatch } = this.props;
 
         if (this.validate() && dispatch) {
-           /*dispatch({
-                type: 'users/create',
+            dispatch({
+                type: this.transactionType,
                 payload: account
-            })
-            */
-           console.log('valid');
-        }else{
-            console.log('invalid');
+            });
+            
         }
     }
 
@@ -221,38 +239,53 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                             <VStack space={3} mt="5">
                                 <FormControl isRequired isInvalid={errors.surname !== undefined }>
                                     <FormControl.Label>Apelido</FormControl.Label>
-                                    <Input variant="filled" placeholder="Insira o seu Apelido" 
+                                    <Input variant="filled" 
+                                            placeholder="Insira o seu Apelido" 
+                                            value={ this.state.account.surname }
                                             onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, surname: value },
                                                                                                 errors: { ...this.state.errors, username: undefined}}) }}/>
                                     {'surname' in errors ? <FormControl.ErrorMessage>{errors.surname}</FormControl.ErrorMessage> : ''}
                                 </FormControl>
                                 <FormControl isRequired>
                                     <FormControl.Label>Nome</FormControl.Label>
-                                    <Input variant="filled" placeholder="Insira o seu Nome"
+                                    <Input variant="filled" 
+                                            placeholder="Insira o seu Nome"
+                                            value={ this.state.account.name }
                                             onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, name: value }}) }}/>
                                         
                                 </FormControl>
                                 <FormControl>
                                     <FormControl.Label>Email</FormControl.Label>
-                                    <Input variant="filled" placeholder="Insira o seu Email"
+                                    <Input variant="filled" 
+                                            placeholder="Insira o seu Email"
+                                            value={ this.state.account.email }
                                             onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, email: value }}) }}/>
                                         
                                 </FormControl>
                                 <FormControl isRequired>
                                     <FormControl.Label>Username</FormControl.Label>
-                                    <Input variant="filled" placeholder="Insira o seu Username"
+                                    <Input variant="filled" 
+                                            placeholder="Insira o seu Username"
+                                            value={ this.state.account.username }
                                             onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, username: value }}) }}/>
                                         
                                 </FormControl>
-                                <FormControl isRequired>
-                                    <FormControl.Label>Password</FormControl.Label>
-                                    <Input variant="filled" placeholder="Insira o seu Password"
-                                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, password: value }}) }}/>
-                                        
-                                </FormControl>
+                                { this.user ?
+                                    <Text /> :
+                                    <FormControl isRequired>
+                                        <FormControl.Label>Password</FormControl.Label>
+                                        <Input variant="filled" 
+                                                placeholder="Insira o seu Password"
+                                                value={ this.state.account.password }
+                                                onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, password: value }}) }}/>
+                                            
+                                    </FormControl>
+                                }
                                 <FormControl>
                                     <FormControl.Label>Telemóvel</FormControl.Label>
-                                    <Input variant="filled" placeholder="Insira o seu Telemóvel"
+                                    <Input variant="filled" 
+                                            placeholder="Insira o seu Telemóvel"
+                                            value={ this.state.account.phoneNumber }
                                             onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, phoneNumber: value }}) }}/>
                                         
                                 </FormControl>
@@ -262,6 +295,7 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                                         bg: "teal.600",
                                         endIcon: <CheckIcon size={5} />
                                         }} mt="1"
+                                        selectedValue={this.state.account.entryPoint}
                                         onValueChange={(itemValue) =>{ 
                                             if(itemValue !== ""){
                                                 this.setState({ account:{ ...this.state.account, entryPoint: itemValue },
@@ -384,7 +418,7 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                                     {'status' in errors ? <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>{errors.status}</FormControl.ErrorMessage> : ''}
                                 </FormControl>
                                 <Button mt="2" colorScheme="lightBlue" bg="lightBlue.900" onPress={this.handleSave}>
-                                        Registar
+                                    {this.buttonLabel}
                                 </Button>
                             </VStack>
                         </Box>
