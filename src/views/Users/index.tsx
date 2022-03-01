@@ -65,7 +65,7 @@ class UsersMain extends React.Component<UsersProps> {
 
     renderItem = (data: any) => (
         <Box>
-            <Pressable onPress={() => console.log('You touched me')} 
+            <Pressable onPress={() => navigate({name: "UserView", params: {user: data.item}})} 
                         alignItems="center" bg="white" 
                         borderBottomColor="trueGray.200" 
                         borderBottomWidth={1} justifyContent="center" 
@@ -110,7 +110,7 @@ class UsersMain extends React.Component<UsersProps> {
     renderHiddenItem = (data: any, rowMap: any) => (
         <HStack flex={1} pl={2}>
             <Pressable px={4} ml="auto" bg="dark.500" justifyContent="center" 
-                        onPress={() => this.viewRow(rowMap, data.item.key)} 
+                        onPress={() => navigate({name: "UserView", params: {user: data.item}})} 
                         _pressed={{opacity: 0.5}}
             >
                 <Icon as={<Ionicons name="eye" />} color="white" />
