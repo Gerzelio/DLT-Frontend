@@ -5,6 +5,7 @@ import UsersListScreen from "../views/Users";
 import UsersFormScreen from "../views/Users/components/create";
 import UsersViewScreen from "../views/Users/components/view";
 
+
 const UserStack = createNativeStackNavigator();
 
 const UsersNavigator: React.FC = () => {

@@ -9,13 +9,13 @@ const styles = StyleSheet.create({
     },
     heading: {
       height: 60,
-      backgroundColor: '#03A9F4',
+      backgroundColor: '#e0f2fe',
       alignItems: 'center',
       justifyContent: 'center',
     },
     headingTest: {
       fontSize: 20,
-      color: 'white',
+      color: '#0c4a6e',
       fontWeight: 'bold',
     },
     list: {
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       right: 20,
       bottom: 20,
-      backgroundColor: '#03A9F4',
+      backgroundColor: '#0c4a6e',
       borderRadius: 30,
       elevation: 8
     },
@@ -48,15 +48,15 @@ const styles = StyleSheet.create({
   },
   rowFront: {
       alignItems: 'center',
-      backgroundColor: '#CCC',
-      borderBottomColor: 'black',
+      backgroundColor: 'white',
+      borderBottomColor: '#ccc',
       borderBottomWidth: 1,
       justifyContent: 'center',
-      height: 50,
+      height: 90,
   },
   rowBack: {
       alignItems: 'center',
-      backgroundColor: '#DDD',
+      backgroundColor: 'white',
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'space-between',
