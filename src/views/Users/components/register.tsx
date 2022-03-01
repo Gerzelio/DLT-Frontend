@@ -3,7 +3,7 @@ import React, { useState, Component } from "react";
 import { Dispatch, AnyAction } from 'redux';
 import { connect } from 'dva';
 import { View, KeyboardAvoidingView, ScrollView} from 'react-native';
-import { Center, Box, Select, Text, Heading, VStack, FormControl, Input, Link, Button, CheckIcon, WarningOutlineIcon } from 'native-base';
+import { Center, Box, Select, Text, Heading, VStack, FormControl, Input, Link, Button, CheckIcon, WarningOutlineIcon, HStack, Alert} from 'native-base';
 
 import { UsersModelState, Users } from '../../../models/Users';  
 import { AuthModelState } from "../../../models/Auth";
@@ -13,7 +13,7 @@ import { UsModelState, Us } from '../../../models/Us';
 import { LocalityModelState, Locality } from '../../../models/Locality'; 
 import Dashboard from "../../../components/Dashboard";     
 
-import styles from './styles';
+//import styles from './styles';
 import { color } from "native-base/lib/typescript/theme/styled-system";
 
 interface UsersProps {
@@ -201,53 +201,58 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
         return(
             <KeyboardAvoidingView>
                 <ScrollView>
-                    <Center w="100%">
-                        <Box safeArea p="2" w="100%" maxW="290" py="8">
+                    <Center w="100%" bgColor="white">
+                        <Box safeArea p="2" w="90%" py="8">
                             <Heading size="lg" color="coolGray.800" 
                                     _dark={{ color: "warmGray.50"}} 
-                                    fontWeight="semibold">
-                                User Form
+                                    fontWeight="semibold"
+                                    marginBottom={5}
+                                    marginTop={0} >
+                                Registo do Utilizador
                             </Heading>
-                            <Heading mt="1" color="coolGray.600" 
-                                        _dark={{ color: "warmGray.200" }} 
-                                        fontWeight="medium" size="xs">
-                                    TODO: Edit this headline
-                            </Heading>
+                            <Alert  status="info" colorScheme="info">
+                                <HStack flexShrink={1} space={2} alignItems="center">
+                                    <Alert.Icon />
+                                    <Text fontSize="xs" fontWeight="medium" color="coolGray.800">
+                                        Preencha os campos abaixo para registar novo utilizador!
+                                    </Text>
+                                </HStack>
+                            </Alert>
                             <VStack space={3} mt="5">
                                 <FormControl isRequired isInvalid={errors.surname !== undefined }>
                                     <FormControl.Label>Apelido</FormControl.Label>
-                                    <Input placeholder="Insira o seu Apelido"
+                                    <Input variant="filled" placeholder="Insira o seu Apelido" 
                                             onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, surname: value },
                                                                                                 errors: { ...this.state.errors, username: undefined}}) }}/>
                                     {'surname' in errors ? <FormControl.ErrorMessage>{errors.surname}</FormControl.ErrorMessage> : ''}
                                 </FormControl>
                                 <FormControl isRequired>
                                     <FormControl.Label>Nome</FormControl.Label>
-                                    <Input placeholder="Insira o seu Nome"
+                                    <Input variant="filled" placeholder="Insira o seu Nome"
                                             onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, name: value }}) }}/>
                                         
                                 </FormControl>
                                 <FormControl>
                                     <FormControl.Label>Email</FormControl.Label>
-                                    <Input placeholder="Insira o seu Email"
+                                    <Input variant="filled" placeholder="Insira o seu Email"
                                             onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, email: value }}) }}/>
                                         
                                 </FormControl>
                                 <FormControl isRequired>
                                     <FormControl.Label>Username</FormControl.Label>
-                                    <Input placeholder="Insira o seu Username"
+                                    <Input variant="filled" placeholder="Insira o seu Username"
                                             onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, username: value }}) }}/>
                                         
                                 </FormControl>
                                 <FormControl isRequired>
                                     <FormControl.Label>Password</FormControl.Label>
-                                    <Input placeholder="Insira o seu Password"
+                                    <Input variant="filled" placeholder="Insira o seu Password"
                                             onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, password: value }}) }}/>
                                         
                                 </FormControl>
                                 <FormControl>
                                     <FormControl.Label>Telemóvel</FormControl.Label>
-                                    <Input placeholder="Insira o seu Telemóvel"
+                                    <Input variant="filled" placeholder="Insira o seu Telemóvel"
                                             onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, phoneNumber: value }}) }}/>
                                         
                                 </FormControl>
@@ -378,7 +383,7 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                                     </Select>
                                     {'status' in errors ? <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>{errors.status}</FormControl.ErrorMessage> : ''}
                                 </FormControl>
-                                <Button mt="2" colorScheme="tertiary" onPress={this.handleSave}>
+                                <Button mt="2" colorScheme="lightBlue" bg="lightBlue.900" onPress={this.handleSave}>
                                         Registar
                                 </Button>
                             </VStack>
