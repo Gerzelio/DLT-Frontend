@@ -71,7 +71,7 @@ export default class Login extends Component<LoginProps, LoginState>{
                         <Center w="100%">
                             <Box safeArea p="2" w="100%" maxW="290" py="8">
                                 <Heading size="lg" color="coolGray.800" 
-                                        _dark={{ color: "warmGray.50"}} 
+                                            _dark={{ color: "warmGray.50"}} 
                                         fontWeight="semibold">
                                     Welcome
                                 </Heading>

@@ -1,9 +1,10 @@
 import React from 'react';
 import { Dispatch, AnyAction } from 'redux';
-import { Text, View, StyleSheet, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, TouchableHighlight, ScrollView } from 'react-native';
 import { connect } from 'dva';
 import { SwipeListView } from 'react-native-swipe-list-view';
-
+import { HStack,Text, Avatar, Pressable, Icon, Box, Select,Heading, VStack, FormControl, Input, Link, Button, CheckIcon, WarningOutlineIcon, Center } from 'native-base';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { UsersModelState } from '../../models/Users';
 
 import { navigate } from '../../routes/RootNavigation';
@@ -45,7 +46,7 @@ class UsersMain extends React.Component<UsersProps> {
     onRowDidOpen = (rowKey: any) => {
         console.log('This row opened', rowKey);
     };
-
+/*
     renderItem = (data: any) => (
         <TouchableHighlight
             onPress={() => console.log('You touched me')}
@@ -60,6 +61,33 @@ class UsersMain extends React.Component<UsersProps> {
         </TouchableHighlight>
     );
 
+    */
+
+    renderItem = (data: any) => (
+        <Box>
+            <Pressable onPress={() => console.log('You touched me')} 
+                        alignItems="center" bg="white" 
+                        borderBottomColor="trueGray.200" 
+                        borderBottomWidth={1} justifyContent="center" 
+                        height={50} 
+                        _pressed={{bg: 'trueGray.200'}} py={8}
+            >
+                <HStack width="100%" px={4}>
+                    <HStack space={2} alignItems="center">
+                        <Avatar color="white" bg={'secondary.700'}>
+                            {data.item.id}
+                        </Avatar>
+                        <VStack space={1} alignItems="center">
+                            <Text fontSize="xs"  >Name : {data.item.name} {data.item.surname}</Text>
+                            <Text>Username : {data.item.username}</Text>
+                            <Text>Parceiro : {data.item.partners?.name}</Text>
+                        </VStack>
+                    </HStack>
+                </HStack>
+            </Pressable>
+        </Box>
+    );
+/*
     renderHiddenItem = (data: any, rowMap: any) => (
         <View style={styles.rowBack}>
             
@@ -77,32 +105,65 @@ class UsersMain extends React.Component<UsersProps> {
             </TouchableOpacity>
         </View>
     );
+    */
+
+    renderHiddenItem = (data: any, rowMap: any) => (
+        <HStack flex={1} pl={2}>
+            <Pressable px={4} ml="auto" bg="dark.500" justifyContent="center" 
+                        onPress={() => this.viewRow(rowMap, data.item.key)} 
+                        _pressed={{opacity: 0.5}}
+            >
+                <Icon as={<Ionicons name="eye" />} color="white" />
+            </Pressable>
+            <Pressable px={4} bg="red.500" justifyContent="center" 
+                        onPress={() => navigate({name: "UserForm", params: {user: data.item}})}
+                        _pressed={{opacity: 0.5}}
+            >
+                <Icon as={<Ionicons name="pencil" />} color="white" />
+            </Pressable>
+        </HStack>
+    );
+
 
     render() {
         const { users: {users} } = this.props;
        
         return (
-            <View style={styles.container}>
-              <View style={styles.heading}>
-                <Text style={styles.headingTest}>Lista de Utilizadores</Text>
-                <TextInput ></TextInput>
-              </View>
-              <SwipeListView
-                data={users}
-                renderItem={this.renderItem}
-                renderHiddenItem={this.renderHiddenItem}
-                //leftOpenValue={75} 
-                rightOpenValue={-150}
-                previewRowKey={'0'}
-                previewOpenValue={-40}
-                previewOpenDelay={3000}
-                onRowDidOpen={this.onRowDidOpen}
-              />
+            <ScrollView>
+                <Box bg="white" safeArea flex={1}>
+                <Heading size="lg" color="coolGray.800" 
+                                    _dark={{ color: "warmGray.50"}} 
+                                    fontWeight="semibold">
+                    Lista de Utilizadores
+                </Heading>
+                
+                    <SwipeListView 
+                        data={users} 
+                        renderItem={this.renderItem} 
+                        renderHiddenItem={this.renderHiddenItem} 
+                        rightOpenValue={-130} 
+                        previewRowKey={'0'} 
+                        previewOpenValue={-40} 
+                        previewOpenDelay={3000} 
+                        onRowDidOpen={this.onRowDidOpen} />
+                
+                {/*<SwipeListView
+                    data={users}
+                    renderItem={this.renderItem}
+                    renderHiddenItem={this.renderHiddenItem}
+                    //leftOpenValue={75} 
+                    rightOpenValue={-150}
+                    previewRowKey={'0'}
+                    previewOpenValue={-40}
+                    previewOpenDelay={3000}
+                    onRowDidOpen={this.onRowDidOpen}
+                />*/}
       
               <TouchableOpacity onPress={() => navigate({name: "UserForm", params: {}}) } style={styles.fab}>
                 <Text style={styles.fabIcon}>+</Text>
               </TouchableOpacity>
-            </View>
+              </Box>
+            </ScrollView>
         )
     }
 }
