@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Text} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UsersListScreen from "../views/Users";
-import UsersFormScreen from "../views/Users/components/create";
+import UsersFormScreen from "../views/Users/components/register";
 
 const UserStack = createNativeStackNavigator();
 
