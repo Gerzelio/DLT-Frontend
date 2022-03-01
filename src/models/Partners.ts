@@ -4,8 +4,8 @@ import { query } from '../services/partners';
 
 
 export interface Partners {
-    id?: string,
-    name?: string,
+    id: string,
+    name: string,
     abbreviation?: string,
     description?: string,
     partnerType?: string,
