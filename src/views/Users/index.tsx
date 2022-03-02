@@ -49,7 +49,7 @@ class UsersMain extends React.Component<UsersProps> {
 
     renderItem = (data: any) => (
         <TouchableHighlight
-            onPress={() => console.log('You touched me')}
+            onPress={() => navigate({name: "UserView", params: {user: data.item}})} 
             style={styles.rowFront}
             underlayColor={'#AAA'}
         >
@@ -113,10 +113,10 @@ class UsersMain extends React.Component<UsersProps> {
             
             <View style={styles.container}>
                 <View style={styles.heading}>
-                <Box alignItems="center" w="100%">
-                <Input w={{base: "75%",md: "25%"}} 
+                <Box alignItems="center" w="80%" bgColor="white">
+                <Input w={{base: "100%",md: "25%"}} 
                         InputLeftElement={<Icon as={<MaterialIcons name="search" />} 
-                        size={5} ml="2" color="muted.700" />} placeholder="Search" />
+                        size={5} ml="2" color="muted.700"  />} placeholder="Search" />
                 </Box>
 
                 </View>
