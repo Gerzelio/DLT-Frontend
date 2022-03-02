@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Dispatch, AnyAction } from 'redux';
 import { Platform, View, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { Center, Box, Text, Heading, VStack, FormControl, Input, Link, Button } from 'native-base';
+import { connect } from 'dva';
 
 
 interface LoginProps {
@@ -19,6 +20,7 @@ interface LoginState {
     errors: LoginData;
 }
 
+@connect()
 export default class Login extends Component<LoginProps, LoginState>{
     constructor(props: any){
         super(props); 
@@ -54,20 +56,31 @@ export default class Login extends Component<LoginProps, LoginState>{
     }
 
     onSubmit = () => {
-        this.validate() ? console.log('Submitted') : console.log('Validation Failed');
+        const { formData: { password, username } } = this.state;
+        const { dispatch } = this.props;
+        
+        if(this.validate() && dispatch) {
+            dispatch({
+                type: 'auth/login',
+                payload: {
+                    username,
+                    password
+                },
+            });
+        }
     }
     
     render(){
         const { errors } = this.state;
         return(
             <View>
-                { 
+                { /*
                     Platform.OS == 'web' ? 
                         // IF WEB BUILD
                         <Center w="60%">
                             <Text>LOGIN IN WEB </Text>
                         </Center>
-                    :   // IF MOBILE BUILD
+                    :   // IF MOBILE BUILD*/
                         <Center w="100%">
                             <Box safeArea p="2" w="100%" maxW="290" py="8">
                                 <Heading size="lg" color="coolGray.800" 
@@ -80,6 +93,7 @@ export default class Login extends Component<LoginProps, LoginState>{
                                         fontWeight="medium" size="xs">
                                     Sign in to continue!
                                 </Heading>
+                                <KeyboardAvoidingView>
                                 <VStack space={3} mt="5">
                                     <FormControl isRequired isInvalid={errors.username!==undefined }>
                                         <FormControl.Label>Username</FormControl.Label>
@@ -102,10 +116,10 @@ export default class Login extends Component<LoginProps, LoginState>{
                                             Forget Password?
                                         </Link>
                                     </FormControl>
-                                    <Button mt="2" colorScheme="tertiary" onPress={this.onSubmit}>
-                                        Sign in
-                                    </Button>
+                                    <Button onPress={() => this.onSubmit()}>Login</Button>
+                                    
                                 </VStack>
+                                </KeyboardAvoidingView>
                             </Box>
                         </Center>
                 }

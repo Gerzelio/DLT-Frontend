@@ -40,7 +40,7 @@ class DrawerNavigation extends Component<DrawerNavigationProps, DrawerNavigation
             <Drawer.Navigator 
                 screenOptions={{
                     headerStyle: {
-                        backgroundColor: '#164e63',
+                        backgroundColor: '#0c4a6e',
                     },
                     headerTintColor: '#fff',
                     headerTitleStyle: {
