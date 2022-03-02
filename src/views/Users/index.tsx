@@ -17,6 +17,10 @@ interface UsersProps {
     users: UsersModelState;
 }
 
+interface UserState {
+    searchField: string;
+}
+
 @connect(
     ({
         users,
@@ -26,9 +30,14 @@ interface UsersProps {
         users,
     }),
   )
-class UsersMain extends React.Component<UsersProps> {
+class UsersMain extends React.Component<UsersProps, UserState> {
     constructor(props: any){
-        super(props); 
+        super(props);
+
+        this.state = {
+          searchField: ''
+        }
+
         const { dispatch } = this.props;
 
         dispatch({
@@ -67,26 +76,7 @@ class UsersMain extends React.Component<UsersProps> {
             </HStack>
         </TouchableHighlight>
     );
-
- /*
-    renderHiddenItem = (data: any, rowMap: any) => (
-        <View style={styles.rowBack}>
-            
-            <TouchableOpacity
-                style={[styles.backRightBtn, styles.backRightBtnLeft]}
-                onPress={() => this.viewRow(rowMap, data.item.key)}
-            >
-                <Text style={styles.backTextWhite}>View</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={[styles.backRightBtn, styles.backRightBtnRight]}
-                onPress={() => navigate({name: "UserForm", params: {user: data.item}})}
-            >
-                <Text style={styles.backTextWhite}>Edit</Text>
-            </TouchableOpacity>
-        </View>
-    );
- */   
+    
     renderHiddenItem = (data: any, rowMap: any) => (
 
             <HStack flex={1} pl={2}>
@@ -106,22 +96,30 @@ class UsersMain extends React.Component<UsersProps> {
 
     );
 
+    handleChange = (e) => {
+      this.setState( { searchField: e.target.value })
+    };
+
     render() {
         const { users: {users} } = this.props;
+        const { searchField } = this.state;
+        const filteredUsers = users.filter(user =>
+            (user.name + ' '+ user.surname).toLowerCase().includes(searchField.toLowerCase())
+        )
        
         return (
             
             <View style={styles.container}>
                 <View style={styles.heading}>
                 <Box alignItems="center" w="80%" bgColor="white">
-                <Input w={{base: "100%",md: "25%"}} 
-                        InputLeftElement={<Icon as={<MaterialIcons name="search" />} 
-                        size={5} ml="2" color="muted.700"  />} placeholder="Search" />
+                    <Input w={{base: "100%",md: "25%"}} onChange={this.handleChange}
+                            InputLeftElement={<Icon as={<MaterialIcons name="search" />} 
+                            size={5} ml="2" color="muted.700"  />} placeholder="Search" />
                 </Box>
 
                 </View>
                 <SwipeListView
-                    data={users}
+                    data={filteredUsers}
                     renderItem={this.renderItem}
                     renderHiddenItem={this.renderHiddenItem}
                     //leftOpenValue={75} 

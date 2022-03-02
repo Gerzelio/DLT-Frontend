@@ -6,6 +6,8 @@ import { KeyboardAvoidingView, ScrollView} from 'react-native';
 import { Center, Box, Select, Text, Heading, VStack, FormControl, Input, Link, Button, CheckIcon, WarningOutlineIcon, HStack, Alert} from 'native-base';
 import {Picker} from '@react-native-picker/picker';
 
+import { navigate } from '../../../routes/RootNavigation';
+
 import { UsersModelState, Users } from '../../../models/Users';  
 import { AuthModelState } from "../../../models/Auth";
 import { PartnersModelState, Partners } from '../../../models/Partners';
@@ -209,7 +211,7 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                 type: this.transactionType,
                 payload: account
             });
-            
+            navigate({name: "UserView", params: {user: account}});
         }
     }
 
