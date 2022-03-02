@@ -2,9 +2,9 @@
 import React, { useState, Component } from "react";
 import { Dispatch, AnyAction } from 'redux';
 import { connect } from 'dva';
-import { View, KeyboardAvoidingView, ScrollView} from 'react-native';
+import { KeyboardAvoidingView, ScrollView} from 'react-native';
 import { Center, Box, Select, Text, Heading, VStack, FormControl, Input, Link, Button, CheckIcon, WarningOutlineIcon, HStack, Alert} from 'native-base';
-
+import {Picker} from '@react-native-picker/picker';
 import { UsersModelState, Users } from '../../../models/Users';  
 import { AuthModelState } from "../../../models/Auth";
 import { PartnersModelState, Partners } from '../../../models/Partners';
@@ -13,7 +13,7 @@ import { UsModelState, Us } from '../../../models/Us';
 import { LocalityModelState, Locality } from '../../../models/Locality'; 
 import Dashboard from "../../../components/Dashboard";     
 
-//import styles from './styles';
+import styles from './styles';
 import { color } from "native-base/lib/typescript/theme/styled-system";
 
 interface UsersProps {
@@ -203,6 +203,7 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
         const { dispatch } = this.props;
 
         if (this.validate() && dispatch) {
+  
             dispatch({
                 type: this.transactionType,
                 payload: account
@@ -237,14 +238,20 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                                 </HStack>
                             </Alert>
                             <VStack space={3} mt="5">
-                                <FormControl isRequired isInvalid={errors.surname !== undefined }>
+                                <FormControl isRequired isInvalid={errors.surname!==undefined}>
                                     <FormControl.Label>Apelido</FormControl.Label>
                                     <Input variant="filled" 
                                             placeholder="Insira o seu Apelido" 
                                             value={ this.state.account.surname }
-                                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, surname: value },
-                                                                                                errors: { ...this.state.errors, username: undefined}}) }}/>
-                                    {'surname' in errors ? <FormControl.ErrorMessage>{errors.surname}</FormControl.ErrorMessage> : ''}
+                                            onChangeText={value=> {
+                                                              
+                                                              
+                                                                    this.setState({ account:{ ...this.state.account, surname: value },
+                                                                        errors: { ...this.state.errors, surname: undefined}})       
+                                                               
+                                                             }}/>
+                                                             
+                                            {'surname' in errors ? <FormControl.ErrorMessage>{errors.surname}</FormControl.ErrorMessage> : ''}
                                 </FormControl>
                                 <FormControl isRequired>
                                     <FormControl.Label>Nome</FormControl.Label>
@@ -262,14 +269,14 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                                             onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, email: value }}) }}/>
                                         
                                 </FormControl>
-                                <FormControl isRequired>
-                                    <FormControl.Label>Username</FormControl.Label>
-                                    <Input variant="filled" 
-                                            placeholder="Insira o seu Username"
-                                            value={ this.state.account.username }
-                                            onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, username: value }}) }}/>
-                                        
-                                </FormControl>
+                                <FormControl isRequired isInvalid={errors.username!==undefined }>
+                                        <FormControl.Label>Username</FormControl.Label>
+                                        <Input variant="filled" placeholder="Insira o seu Username"
+                                                value={ this.state.account.username }
+                                                onChangeText={value => { this.setState({ account:{ ...this.state.account, username: value },
+                                                                                            errors: { ...this.state.errors, username: undefined}}) }}/>
+                                        {'username' in errors ? <FormControl.ErrorMessage>{errors.username}</FormControl.ErrorMessage> : ''}
+                                    </FormControl>
                                 { this.user ?
                                     <Text /> :
                                     <FormControl isRequired>
@@ -291,130 +298,136 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                                 </FormControl>
                                 <FormControl isRequired isInvalid={errors.entryPoint !== undefined }>
                                     <FormControl.Label>Ponto de Entrada</FormControl.Label>
-                                    <Select defaultValue="0" minWidth="200" placeholder="Seleccione o Ponto de Entrada" _selectedItem={{
-                                        bg: "teal.600",
-                                        endIcon: <CheckIcon size={5} />
-                                        }} mt="1"
-                                        selectedValue={this.state.account.entryPoint}
-                                        onValueChange={(itemValue) =>{ 
-                                            if(itemValue !== ""){
-                                                this.setState({ account:{ ...this.state.account, entryPoint: itemValue },
-                                                                errors: { ...this.state.errors, entryPoint: undefined}}) 
+                                    <Picker 
+                                        style={styles.dropDownPicker}
+                                        selectedValue={String(this.state.account.entryPoint)}
+                                        onValueChange={(itemValue, itemIndex) =>
+                                            { 
+                                                if (itemIndex !== 0){
+                                                    this.setState({ account:{ ...this.state.account, entryPoint: itemValue},
+                                                                    errors: { ...this.state.errors, entryPoint: undefined}}) 
+                                                }
                                             }
-                                        }}
-                                    >
-                                        <Select.Item label=" --Seleccione o Ponto de Entrada --" value="0" />
-                                        <Select.Item label="Unidade Sanitaria" value="1" />
-                                        <Select.Item label="Escola" value="2" />
-                                        <Select.Item label="Comunidade" value="3" />
-                                    </Select>
+                                        }>
+                                        <Picker.Item label="-- Seleccione o Ponto de Entrada --" value="0" />
+                                        <Picker.Item label="Unidade Sanitaria" value="1" />
+                                        <Picker.Item label="Escola" value="2" />
+                                        <Picker.Item label="Comunidade" value="3" />
+                                    </Picker>
                                     {'entryPoint' in errors ? <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>{errors.entryPoint}</FormControl.ErrorMessage> : ''}   
+                                    
                                 </FormControl>
                                 <FormControl isRequired isInvalid={errors.partners !== undefined }>
                                     <FormControl.Label>Parceiro</FormControl.Label>
-                                    <Select minWidth="200"  
-                                            _selectedItem={{ bg: "teal.600", endIcon: <CheckIcon size={5} />}} 
-                                            mt="1"
-                                            selectedValue={this.state.account.partners.id || ""}
-                                            onValueChange={(itemValue) =>{ 
-                                                if(itemValue !== ""){
+                                    <Picker
+                                        style={styles.dropDownPicker}
+                                        selectedValue={this.state.account.partners.id || "0"}
+                                        onValueChange={(itemValue, itemIndex) =>
+                                            { 
+                                                if(itemIndex !== 0){
                                                     this.setState({ account:{ ...this.state.account, partners: {"id": itemValue}},
                                                                     errors: { ...this.state.errors, partners: undefined}}) 
                                                 }
-                                            }}
-                                    >
-                                        <Select.Item label="--Seleccione o Parceiro--" value="" />
-                                        { 
-                                            partners.map(item => (
-                                                <Select.Item key={String(item.id)} label={item.name} value={String(item.id)} />
-                                            ))
+                                            }
                                         }
-                                    </Select>
+                                    >
+
+                                        <Picker.Item label="-- Seleccione o Parceiro --" value="0" />
+                                        { 
+                                            partners.map(partner => (
+                                                <Picker.Item key={partner.id} label={partner.name} value={partner.id} />
+                                            ))
+                                        }  
+                                    </Picker>
                                     {'partners' in errors? <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>{errors.partners}</FormControl.ErrorMessage> : ''}
                                 </FormControl>
                                 <FormControl isRequired isInvalid={errors.profiles !== undefined }>
                                     <FormControl.Label>Perfil</FormControl.Label>
-                                    <Select minWidth="200"  
-                                            _selectedItem={{ bg: "teal.600", endIcon: <CheckIcon size={5} />}} 
-                                            mt="1"
-                                            selectedValue={this.state.account.profiles.id || ""}
-                                            onValueChange={(itemValue) =>{ 
-                                                if(itemValue !== ""){
+                                    <Picker
+                                        style={styles.dropDownPicker}
+                                        selectedValue={this.state.account.profiles.id || "0"}
+                                        onValueChange={(itemValue, itemIndex) =>
+                                            { 
+                                                if(itemIndex !== 0){
                                                     this.setState({ account:{ ...this.state.account, profiles: {"id": itemValue} },
                                                                     errors: { ...this.state.errors, profiles: undefined}}) 
                                                 }
-                                            }}
+                                            }
+                                        }
                                     >
-                                        <Select.Item label="--Seleccione o Perfil--" value="" />
+                                        <Picker.Item label="-- Seleccione o Perfil --" value="0" />
                                         { 
                                             profiles.map(item => (
-                                                <Select.Item key={String(item.id)} label={item.name} value={String(item.id)} />
+                                                <Select.Item key={item.id} label={item.name} value={item.id} />
                                             ))
-                                        }
-                                    </Select>
+                                        }  
+                                    </Picker>
                                     {'profiles' in errors ? <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>{errors.profiles}</FormControl.ErrorMessage> : ''}
                                 </FormControl>
                                 <FormControl isRequired isInvalid={errors.locality !== undefined }>
                                     <FormControl.Label>Localidade</FormControl.Label>
-                                    <Select minWidth="200"  
-                                            _selectedItem={{ bg: "teal.600", endIcon: <CheckIcon size={5} />}} 
-                                            mt="1"
-                                            selectedValue={this.state.account.locality.id || ""}
-                                            onValueChange={(itemValue) =>{ 
-                                                if(itemValue !== ""){
+                                    <Picker
+                                        style={styles.dropDownPicker}
+                                        selectedValue={this.state.account.locality.id || "0"}
+                                        onValueChange={(itemValue, itemIndex) =>
+                                            { 
+                                                if(itemValue !== "0"){
                                                     this.setState({ account:{ ...this.state.account, locality: {"id": itemValue} },
                                                                     errors: { ...this.state.errors, locality: undefined}}) 
                                                 }
-                                            }}
+                                            }
+                                        }
                                     >
-                                        <Select.Item label="--Seleccione a localidade--" value="" />
+
+                                        <Picker.Item label="-- Seleccione a localidade --" value="0" />
                                         { 
-                                            localities.map(item => (
-                                                <Select.Item key={String(item.id)} label={item.name} value={String(item.id)} />
+                                            localities.map(locality => (
+                                                <Picker.Item key={locality.id} label={locality.name} value={locality.id} />
                                             ))
                                         }
-                                    </Select>
+                                    </Picker>
                                     {'locality' in errors ? <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>{errors.locality}</FormControl.ErrorMessage> : ''}
                                 </FormControl>
                                 <FormControl isRequired isInvalid={errors.us !== undefined }>
                                     <FormControl.Label>US</FormControl.Label>
-                                    <Select minWidth="200"  
-                                            _selectedItem={{ bg: "teal.600", endIcon: <CheckIcon size={5} />}} 
-                                            mt="1"
-                                            selectedValue={this.state.account.us.id || ""}
-                                            onValueChange={(itemValue) =>{ 
-                                                if(itemValue !== ""){
+                                    <Picker
+                                        style={styles.dropDownPicker}
+                                        selectedValue={this.state.account.us.id || "0"}
+                                        onValueChange={(itemValue, itemIndex) =>
+                                            {
+                                                if(itemValue !== "0"){
                                                     this.setState({ account:{ ...this.state.account, us: {"id": itemValue} },
                                                                     errors: { ...this.state.errors, us: undefined}}) 
                                                 }
-                                            }}
+                                            }
+                                        }
                                     >
-                                        <Select.Item label="--Seleccione a US--" value="" />
+                                        <Picker.Item label="-- Seleccione a US --" value="0" />
                                         { 
-                                            us.map(item => (
-                                                <Select.Item key={String(item.id)} label={item.name} value={String(item.id)} />
+                                            us.map(us => (
+                                                <Picker.Item key={us.id} label={us.name} value={us.id} />
                                             ))
                                         }
-                                    </Select>
+                                    </Picker>
                                     {'us' in errors ? <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>{errors.us}</FormControl.ErrorMessage> : ''}
                                 </FormControl>
                                 <FormControl isRequired isInvalid={errors.status !== undefined }>
                                     <FormControl.Label>Estado</FormControl.Label>
-                                    <Select minWidth="200" 
-                                            _selectedItem={{bg: "teal.600",endIcon: <CheckIcon size={5} />}} 
-                                            mt="1"
-                                            defaultValue=""
-                                            onValueChange={(itemValue) =>{ 
-                                                if(itemValue !== ""){
+                                    <Picker 
+                                        style={styles.dropDownPicker}
+                                        selectedValue={String(this.state.account.status) || ""}
+                                        onValueChange={(itemValue, itemIndex) =>
+                                            { 
+                                                if (itemValue !== ""){
                                                     this.setState({ account:{ ...this.state.account, status: Number(itemValue) },
                                                                     errors: { ...this.state.errors, status: undefined} }) 
                                                 }
-                                            }}
-                                    >
-                                        <Select.Item label="--Seleccione o Estado --" value="" />
-                                        <Select.Item label="Activo" value="1" />
-                                        <Select.Item label="Inactivo" value="0" />
-                                    </Select>
+                                            }
+                                        }>
+                                        <Picker.Item label="-- Seleccione o Estado --" value="" />
+                                        <Picker.Item label="Inactivo" value="0" />
+                                        <Picker.Item label="Activo" value="1" />
+                                    </Picker>
                                     {'status' in errors ? <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>{errors.status}</FormControl.ErrorMessage> : ''}
                                 </FormControl>
                                 <Button mt="2" colorScheme="lightBlue" bg="lightBlue.900" onPress={this.handleSave}>
