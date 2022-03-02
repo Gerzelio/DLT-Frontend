@@ -5,6 +5,7 @@ import { connect } from 'dva';
 import { KeyboardAvoidingView, ScrollView} from 'react-native';
 import { Center, Box, Select, Text, Heading, VStack, FormControl, Input, Link, Button, CheckIcon, WarningOutlineIcon, HStack, Alert} from 'native-base';
 import {Picker} from '@react-native-picker/picker';
+
 import { UsersModelState, Users } from '../../../models/Users';  
 import { AuthModelState } from "../../../models/Auth";
 import { PartnersModelState, Partners } from '../../../models/Partners';
@@ -203,7 +204,7 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
         const { dispatch } = this.props;
 
         if (this.validate() && dispatch) {
-  
+
             dispatch({
                 type: this.transactionType,
                 payload: account
@@ -243,6 +244,7 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                                     <Input variant="filled" 
                                             placeholder="Insira o seu Apelido" 
                                             value={ this.state.account.surname }
+
                                             onChangeText={value=> {
                                                               
                                                               
@@ -269,6 +271,7 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                                             onChangeText={(value : string)=> { this.setState({ account:{ ...this.state.account, email: value }}) }}/>
                                         
                                 </FormControl>
+
                                 <FormControl isRequired isInvalid={errors.username!==undefined }>
                                         <FormControl.Label>Username</FormControl.Label>
                                         <Input variant="filled" placeholder="Insira o seu Username"
@@ -277,6 +280,7 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                                                                                             errors: { ...this.state.errors, username: undefined}}) }}/>
                                         {'username' in errors ? <FormControl.ErrorMessage>{errors.username}</FormControl.ErrorMessage> : ''}
                                     </FormControl>
+
                                 { this.user ?
                                     <Text /> :
                                     <FormControl isRequired>
@@ -298,6 +302,7 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                                 </FormControl>
                                 <FormControl isRequired isInvalid={errors.entryPoint !== undefined }>
                                     <FormControl.Label>Ponto de Entrada</FormControl.Label>
+
                                     <Picker 
                                         style={styles.dropDownPicker}
                                         selectedValue={String(this.state.account.entryPoint)}
