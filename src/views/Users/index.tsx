@@ -97,7 +97,7 @@ class UsersMain extends React.Component<UsersProps, UserState> {
     );
 
     handleChange = (e) => {
-      this.setState( { searchField: e.target.value })
+      this.setState( { searchField: e })
     };
 
     render() {
@@ -112,7 +112,7 @@ class UsersMain extends React.Component<UsersProps, UserState> {
             <View style={styles.container}>
                 <View style={styles.heading}>
                 <Box alignItems="center" w="80%" bgColor="white">
-                    <Input w={{base: "100%",md: "25%"}} onChange={this.handleChange}
+                    <Input w={{base: "100%",md: "25%"}} onChangeText={this.handleChange}
                             InputLeftElement={<Icon as={<MaterialIcons name="search" />} 
                             size={5} ml="2" color="muted.700"  />} placeholder="Search" />
                 </Box>
