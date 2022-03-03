@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Text} from 'react-native';
+import {Text, Platform} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UsersListScreen from "../views/Users";
 import UsersFormScreen from "../views/Users/components/register";
@@ -18,7 +18,7 @@ const UsersNavigator: React.FC = () => {
                         back
                       </Text>
                     ),
-                    headerShown:true
+                    headerShown:(Platform.OS==='web' ? false: true)
                 }}/>
         <UserStack.Screen name="UserView" component={UsersViewScreen} options={{
                     headerTitle: (props) => (
@@ -26,7 +26,7 @@ const UsersNavigator: React.FC = () => {
                         back
                       </Text>
                     ),
-                    headerShown:true
+                    headerShown:(Platform.OS==='web' ? false: true)
                 }}/>
       </UserStack.Navigator>
   );
