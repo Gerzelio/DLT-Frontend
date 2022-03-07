@@ -1,5 +1,5 @@
 
-import { Dimensions, StyleSheet} from 'react-native';
+import { Dimensions, StyleSheet, Platform} from 'react-native';
 
 const { width, height} = Dimensions.get("screen");
 
@@ -9,6 +9,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'white',
+    },
+    webStyle:{
+        ...Platform.select({
+            web:{
+                paddingLeft: "25%", 
+                paddingRight: "25%", 
+                backgroundColor: "#CCCCCC",
+            }
+        })
     },
     containerForm:{
         padding: 30,
@@ -82,11 +91,6 @@ const styles = StyleSheet.create({
     user:{
         width: Dimensions.get('window').width,
         marginTop: 85,
-        // height: '1%',
-        // marginBottom: "35%",
-        // backgroundColor:'#fff',
-        // borderBottomStartRadius: 100,
-        // radius: 100,
 
     },
     userLogo:{

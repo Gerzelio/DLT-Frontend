@@ -2,10 +2,14 @@
 import React, { useState, Component } from "react";
 import { Dispatch, AnyAction } from 'redux';
 import { connect } from 'dva';
-import { KeyboardAvoidingView, ScrollView} from 'react-native';
-import { Center, Box, Select, Text, Heading, VStack, FormControl, Input, Link, Button, CheckIcon, WarningOutlineIcon, HStack, Alert} from 'native-base';
+import { KeyboardAvoidingView, Platform, ScrollView} from 'react-native';
+import { Center, Box, Select, Text, Heading, VStack, FormControl, 
+        Input, Link, Button, CheckIcon, WarningOutlineIcon, HStack, 
+        Alert, Flex, Icon, View}
+     from 'native-base';      
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import {Picker} from '@react-native-picker/picker';
-
+import { navigate } from '../../../routes/RootNavigation';
 import { UsersModelState, Users } from '../../../models/Users';  
 import { AuthModelState } from "../../../models/Auth";
 import { PartnersModelState, Partners } from '../../../models/Partners';
@@ -209,7 +213,7 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                 type: this.transactionType,
                 payload: account
             });
-            
+            navigate({name: "UserView", params: {user: account}});
         }
     }
 
@@ -221,7 +225,10 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
         return(
             <KeyboardAvoidingView>
                 <ScrollView>
-                    <Center w="100%" bgColor="white">
+                   <View style={styles.webStyle}> 
+                        
+                    <Center w="100%" bgColor="white"
+                                    >
                         <Box safeArea p="2" w="90%" py="8">
                             <Heading size="lg" color="coolGray.800" 
                                     _dark={{ color: "warmGray.50"}} 
@@ -435,12 +442,33 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                                     </Picker>
                                     {'status' in errors ? <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>{errors.status}</FormControl.ErrorMessage> : ''}
                                 </FormControl>
+                                
+                            {
+                                Platform.OS==="web" ?
+                                    <Flex direction="row" mb="2.5" mt="1.5" style={{justifyContent: 'flex-end', }}>
+                                        
+                                        <Center>
+                                            <Button onPress={() => navigate({name: "UserList"})} size={'md'}  bg="warning.400">
+                                                <Icon as={<Ionicons name="play-back-sharp" />} color="white" size={25} />
+                                            </Button>
+                                        </Center>
+                                        <Center>
+                                            <Button onPress={this.handleSave} bg="primary.700" style={{marginLeft:10,}}>
+                                                <Text style={styles.txtSubmit}>{this.buttonLabel}</Text>                                                
+                                            </Button>
+                                        </Center>
+                                        
+                                    </Flex>   
+                                : 
                                 <Button mt="2" colorScheme="lightBlue" bg="lightBlue.900" onPress={this.handleSave}>
                                     {this.buttonLabel}
                                 </Button>
+                            }
                             </VStack>
                         </Box>
                     </Center>
+
+                    </View>
                 </ScrollView>
             </KeyboardAvoidingView>
         )
