@@ -9,9 +9,7 @@ import { Center, Box, Select, Text, Heading, VStack, FormControl,
      from 'native-base';      
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import {Picker} from '@react-native-picker/picker';
-
 import { navigate } from '../../../routes/RootNavigation';
-
 import { UsersModelState, Users } from '../../../models/Users';  
 import { AuthModelState } from "../../../models/Auth";
 import { PartnersModelState, Partners } from '../../../models/Partners';
