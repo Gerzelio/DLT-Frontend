@@ -96,7 +96,7 @@ class UsersMain extends React.Component<UsersProps, UserState> {
 
     );
 
-    handleChange = (e) => {
+    handleChange = (e: any) => {
       this.setState( { searchField: e })
     };
 
