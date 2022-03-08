@@ -314,7 +314,7 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
 
                                     <Picker 
                                         style={styles.dropDownPicker}
-                                        selectedValue={String(this.state.account.entryPoint)}
+                                        selectedValue={this.state.account.entryPoint}
                                         onValueChange={(itemValue, itemIndex) =>
                                             { 
                                                 if (itemIndex !== 0){

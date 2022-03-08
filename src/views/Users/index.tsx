@@ -3,9 +3,9 @@ import { Dispatch, AnyAction } from 'redux';
 import { View, StyleSheet, TouchableOpacity, TouchableHighlight, ScrollView , Platform} from 'react-native';
 import { connect } from 'dva';
 import { SwipeListView } from 'react-native-swipe-list-view';
-import { HStack,Text, Avatar, Pressable, Icon, Box, Select,Heading, VStack, FormControl, Input, Link, Button, CheckIcon, WarningOutlineIcon, Center } from 'native-base';
-import { Table } from 'react-bootstrap';
-// import '@bootstrap/dist/css/bootstrap.min.css';
+import { HStack,Text, Avatar, Pressable, Icon, Box, Select,Heading, VStack, FormControl, Input, Link, Button, CheckIcon, WarningOutlineIcon, Center, Flex } from 'native-base';
+import {Table} from 'react-bootstrap';
+// import from 'bootstrap/dist/css/bootstrap.min.css';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { UsersModelState } from '../../models/Users';
 
@@ -69,8 +69,8 @@ class UsersMain extends React.Component<UsersProps, UserState> {
                     flex={1} space={5} alignItems="center">
                 {/* <Avatar color="white" bg={'warning.600'} > */}              
                 <Avatar color="white" bg={randomHexColor()} >
-                    {/* {data.item.username.charAt(0).toUpperCase()} */}
-                    {"A"}
+                    {data.item.username.charAt(0).toUpperCase()}
+                    {/* {"A"} */}
                 </Avatar>    
                 <View>
                     <Text color="darkBlue.800">{data.item.username} </Text>
@@ -114,19 +114,21 @@ class UsersMain extends React.Component<UsersProps, UserState> {
        
         return (
             Platform.OS==="web" ?
-                <View>
-                    <View style={{alignItems: 'center', marginBottom: 15,}}>
-                        <Dashboard /> 
-                    </View>
-                    <View style={styles.heading}>
-                    <Box alignItems="center" w="25%" bgColor="white">
-                        <Input w={{base: "100%",md: "100%"}} onChangeText={this.handleChange}
-                                InputLeftElement={<Icon as={<MaterialIcons name="search" />} 
-                                size={5} ml="2" color="muted.700"  />} placeholder="Search" />
-                    </Box>
+            // WEB List
+            <View style={{backgroundColor: "#fff"}}>
+                <View style={{alignItems: 'center', marginBottom: 15,}}>
+                    <Dashboard /> 
+                </View>
+                <View style={styles.heading}>
+                <Box alignItems="center" w="25%" bgColor="white">
+                    <Input w={{base: "100%",md: "100%"}} onChangeText={this.handleChange}
+                            InputLeftElement={<Icon as={<MaterialIcons name="search" />} 
+                            size={5} ml="2" color="muted.700"  />} placeholder="Search" />
+                </Box>
 
-                    </View>    
-                    <table>
+                </View>   
+                <Table  striped bordered hover style={{ borderWidth: 4, borderColor: "#20232a",marginLeft: "3%", marginRight: "3%",}}>
+                    <thead style={{ fontWeight: "bold"}}>
                         <tr>
                             <td> Tipo de Utilizador</td>
                             <td> Estado de Utilizador</td>
@@ -137,6 +139,8 @@ class UsersMain extends React.Component<UsersProps, UserState> {
                             <td> Email</td>
                             <td> Telefone</td>
                         </tr>
+                    </thead>
+                    <tbody>
                         {
                             filteredUsers.map((item)=>
                                 <tr>
@@ -144,7 +148,17 @@ class UsersMain extends React.Component<UsersProps, UserState> {
                                     <td>{ (item.status===1)  ? "Activo" : "Inactivo" }</td>
                                     <td>{ item.username }</td>
                                     <td>{ item.name + ' '+ item.surname }</td>
-                                    <td>{item.entryPoint}</td>
+                                    <td>
+                                        { 
+                                            (item.entryPoint==="1") ?
+                                                "Unidade Sanitaria"
+                                            : 
+                                            (item.entryPoint==="2") ? 
+                                                "Escola"
+                                            : 
+                                                "Comunidade"                                            
+                                        }  
+                                    </td>
                                     <td>{ item.partners?.name }</td>
                                     <td>{ item.email }</td>
                                     <td>{ item.phoneNumber }</td>
@@ -167,34 +181,45 @@ class UsersMain extends React.Component<UsersProps, UserState> {
                                 </tr>
                             )
                         }
-                    </table> 
-                </View>  
+                    </tbody>
+                </Table> 
+                <Flex direction="row" mb="2.5" mt="1.5" style={{justifyContent: 'flex-end', marginRight: "3%",}}>
+                    <Center>
+                        <Button onPress={() => navigate({name: "UserForm", params: {}}) }  style={{marginTop: 35, marginLeft: 10,}} size={'md'} colorScheme="tertiary">
+                            <Icon as={<MaterialIcons name="add" />} color="white" />
+                        </Button>
+                    </Center>
+                    
+                </Flex>  
+            </View> 
             :
-                <View style={styles.container}>
-                    <View style={styles.heading}>
-                    <Box alignItems="center" w="80%" bgColor="white">
-                        <Input w={{base: "100%",md: "25%"}} onChangeText={this.handleChange}
-                                InputLeftElement={<Icon as={<MaterialIcons name="search" />} 
-                                size={5} ml="2" color="muted.700"  />} placeholder="Search" />
-                    </Box>
+            // Mobile list
+            <View style={styles.container}>
+                <View style={styles.heading}>
+                <Box alignItems="center" w="80%" bgColor="white" style={{borderRadius: 5,}}>
+                    <Input w={{base: "100%",md: "25%"}} onChangeText={this.handleChange}
+                            InputLeftElement={<Icon as={<MaterialIcons name="search" />} 
+                            size={5} ml="2" color="muted.700"  />} placeholder="Search" 
+                            style={{borderRadius: 45,}}/>
+                </Box>
 
-                    </View>
-                    <SwipeListView
-                        data={filteredUsers}
-                        renderItem={this.renderItem}
-                        renderHiddenItem={this.renderHiddenItem}
-                        //leftOpenValue={75} 
-                        rightOpenValue={-150}
-                        previewRowKey={'0'}
-                        previewOpenValue={-40}
-                        previewOpenDelay={3000}
-                        onRowDidOpen={this.onRowDidOpen}
-                    />
-        
-                    <TouchableOpacity onPress={() => navigate({name: "UserForm", params: {}}) } style={styles.fab}>
-                        <Text style={styles.fabIcon}>+</Text>
-                    </TouchableOpacity>
                 </View>
+                <SwipeListView
+                    data={filteredUsers}
+                    renderItem={this.renderItem}
+                    renderHiddenItem={this.renderHiddenItem}
+                    //leftOpenValue={75} 
+                    rightOpenValue={-150}
+                    previewRowKey={'0'}
+                    previewOpenValue={-40}
+                    previewOpenDelay={3000}
+                    onRowDidOpen={this.onRowDidOpen}
+                />
+        
+                <TouchableOpacity onPress={() => navigate({name: "UserForm", params: {}}) } style={styles.fab}>
+                    <Icon as={<MaterialIcons name="add" style={styles.fabIcon} />} />
+                </TouchableOpacity>
+            </View>
       
         )
     }

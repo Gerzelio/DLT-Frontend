@@ -28,19 +28,19 @@ const styles = StyleSheet.create({
     },
     fab: {
       position: 'absolute',
-      width: 56,
-      height: 56,
+      width: 66,
+      height: 66,
       alignItems: 'center',
       justifyContent: 'center',
       right: 20,
       bottom: 20,
       backgroundColor: '#0c4a6e',
-      borderRadius: 30,
-      elevation: 8
+      borderRadius: 40,
+      elevation: 8,
     },
     fabIcon: {
       fontSize: 40,
-      color: 'white'
+      color: '#FFF',
     },
     
   backTextWhite: {

@@ -4,9 +4,12 @@ import { Dispatch, AnyAction } from 'redux';
 import { connect } from 'dva';
 import { View, KeyboardAvoidingView, ScrollView,
         TextInput, TouchableOpacity, 
-        Text, Button} 
+        Text, Platform} 
         from 'react-native';
+import { Center, Flex, Icon, Button } from "native-base";        
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import {Picker} from '@react-native-picker/picker';
+import { navigate } from "../../../routes/RootNavigation";
 import { UsersModelState, Users } from '../../../models/Users';  
 import { AuthModelState } from "../../../models/Auth";
 import { PartnersModelState, Partners } from '../../../models/Partners';
@@ -16,7 +19,6 @@ import { LocalityModelState, Locality } from '../../../models/Locality';
 import Dashboard from "../../../components/Dashboard";     
 
 import styles from './styles';
-
 interface UsersProps {
     dispatch: Dispatch<AnyAction>;
     userLogged: Users;
@@ -330,12 +332,29 @@ export default class UsersForm extends Component<UsersProps, UsersState>{
                                 <Picker.Item label="Inactivo" value="0" />
                                 <Picker.Item label="Activo" value="1" />
                             </Picker>
-
-                            <View style={styles.btnDiv}>
-                                <TouchableOpacity style={styles.btnSubmit} onPress={() => this.handlerAction()}>
-                                    <Text style={styles.txtSubmit}>{this.buttonLabel}</Text>
-                                </TouchableOpacity>                            
-                            </View>
+                            {
+                                Platform.OS==="web" ?
+                                    <Flex direction="row" mb="2.5" mt="1.5" style={{justifyContent: 'flex-end', }}>
+                                        
+                                        <Center>
+                                            <Button onPress={() => navigate({name: "UserList"})} size={'md'}  bg="warning.400">
+                                                <Icon as={<Ionicons name="play-back-sharp" />} color="white" size={25} />
+                                            </Button>
+                                        </Center>
+                                        <Center>
+                                            <Button  onPress={() => this.handlerAction()} bg="primary.700">
+                                                <Text style={styles.txtSubmit}>{this.buttonLabel}</Text>                                                
+                                            </Button>
+                                        </Center>
+                                        
+                                    </Flex>   
+                                : 
+                                <View style={styles.btnDiv}>
+                                    <TouchableOpacity style={styles.btnSubmit} onPress={() => this.handlerAction()}>
+                                        <Text style={styles.txtSubmit}>{this.buttonLabel}</Text>
+                                    </TouchableOpacity>                            
+                                </View>
+                            }
 
                         </View>
                     </View>

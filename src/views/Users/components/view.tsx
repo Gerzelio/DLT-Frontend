@@ -98,7 +98,17 @@ export default class UsersView extends Component<UsersProps>{
 
                                         <Text> <Text style={styles.txtLabel}>Telemóvel: </Text> { this.user.phoneNumber }</Text>
 
-                                        <Text> <Text style={styles.txtLabel}>Ponto de Entrada: </Text> { this.user.entryPoint }</Text>
+                                        <Text> <Text style={styles.txtLabel}>Ponto de Entrada: </Text>
+                                            { 
+                                                (this.user.entryPoint==="1") ?
+                                                    "Unidade Sanitaria"
+                                                : 
+                                                (this.user.entryPoint==="2") ? 
+                                                    "Escola"
+                                                : 
+                                                    "Comunidade"                                            
+                                            }  
+                                        </Text>
                                         
                                         <Text> <Text style={styles.txtLabel}>Localidade: </Text> {this.user.locality?.name}</Text>
                                         
@@ -158,7 +168,17 @@ export default class UsersView extends Component<UsersProps>{
 
                                 <Text> <Text style={styles.txtLabel}>Telemóvel: </Text> { this.user.phoneNumber }</Text>
 
-                                <Text> <Text style={styles.txtLabel}>Ponto de Entrada: </Text> { this.user.entryPoint }</Text>
+                                <Text> <Text style={styles.txtLabel}>Ponto de Entrada: </Text>
+                                    { 
+                                        (this.user.entryPoint==="1") ?
+                                            "Unidade Sanitaria"
+                                        : 
+                                        (this.user.entryPoint==="2") ? 
+                                            "Escola"
+                                        : 
+                                            "Comunidade"                                            
+                                    }  
+                                </Text>
                                 
                                 <Text> <Text style={styles.txtLabel}>Localidade: </Text> {this.user.locality?.name}</Text>
                                 
@@ -176,7 +196,7 @@ export default class UsersView extends Component<UsersProps>{
                 </ScrollView>                
                             
                 <TouchableOpacity onPress={() => navigate({name: "UserForm", params: {user: this.user}}) } style={styles.fab}>
-                    <Text style={styles.fabIcon}> <Icon as={<Ionicons name="pencil" />} color="white" size={9} /> </Text>
+                    <Icon as={<Ionicons name="pencil" />} color="white" />
                 </TouchableOpacity>
             </KeyboardAvoidingView>
         )
