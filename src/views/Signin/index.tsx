@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Dispatch, AnyAction } from 'redux';
 import { Platform, View, KeyboardAvoidingView, ScrollView } from 'react-native';
-import { Center, Box, Text, Heading, VStack, FormControl, Input, Link, Button } from 'native-base';
+import { Center, Box, Text, Heading, VStack, FormControl, Input, Link, Button, Image } from 'native-base';
 import { connect } from 'dva';
-
+//import firstImage from "./../../assets/dreams";
+//const firstImage = require('./../../assets/dreams.png'); 
 
 interface LoginProps {
     dispatch: Dispatch<AnyAction>;
@@ -74,24 +75,22 @@ export default class Login extends Component<LoginProps, LoginState>{
         const { errors } = this.state;
         return(
             <View>
-                { /*
+                { 
+                /*
                     Platform.OS == 'web' ? 
                         // IF WEB BUILD
                         <Center w="60%">
                             <Text>LOGIN IN WEB </Text>
                         </Center>
                     :   // IF MOBILE BUILD*/
-                        <Center w="100%">
-                            <Box safeArea p="2" w="100%" maxW="290" py="8">
-                                <Heading size="lg" color="coolGray.800" 
-                                            _dark={{ color: "warmGray.50"}} 
-                                        fontWeight="semibold">
-                                    Welcome
-                                </Heading>
+                        <Center w="100%" bgColor="white">
+                            <Box safeArea p="2" w="90%"  py="8" >
+                                <Image style={{  width: "100%", resizeMode: "contain" }} source={require('../../../assets/dreams.png')} size="200"  />
+                                
                                 <Heading mt="1" color="coolGray.600" 
                                         _dark={{ color: "warmGray.200" }} 
-                                        fontWeight="medium" size="xs">
-                                    Sign in to continue!
+                                        fontWeight="medium" size="md" px="10" py="5">
+                                        <Text color="darkBlue.800">Login to Dreams Layering Tool</Text>
                                 </Heading>
                                 <KeyboardAvoidingView>
                                 <VStack space={3} mt="5">
@@ -116,13 +115,13 @@ export default class Login extends Component<LoginProps, LoginState>{
                                             Forget Password?
                                         </Link>
                                     </FormControl>
-                                    <Button onPress={() => this.onSubmit()}>Login</Button>
+                                    <Button colorScheme="primary"  onPress={() => this.onSubmit()}>Login</Button>
                                     
                                 </VStack>
                                 </KeyboardAvoidingView>
                             </Box>
                         </Center>
-                }
+                                        }
             </View>
             
         );

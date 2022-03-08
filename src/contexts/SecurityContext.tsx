@@ -35,11 +35,7 @@ class SecurityContext extends Component<SecurityLayoutProps, SecurityState> {
         isReady: false,
     };
 
-    componentDidMount() {
-        this.setState({
-          isReady: true,
-        });
-    }
+  
 
     render() {
         const { isReady } = this.state;
@@ -47,13 +43,13 @@ class SecurityContext extends Component<SecurityLayoutProps, SecurityState> {
 
         const isLogged = logged && currentUser !== undefined;
 
-        if ((!isLogged && loading) || !isReady) {
+       /* if ((!isLogged && loading) || !isReady) {
             return(
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                     <ActivityIndicator size="large" color="blue" />
                 </View>
             );
-        }
+        }*/
         
         return <AppRoutes />
        
