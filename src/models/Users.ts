@@ -83,16 +83,17 @@ const UsersModel: UsersModelType = {
              * TODO
              * add error response validation 
              */
-            /*
+            
             yield put({
                 type: 'addUser',
                 payload: data,
             });
-              */
+            
           },
 
         *update({ payload, callback }, { call, put }) {
             const response = yield call(edit, payload);
+            const { status, data } = response;
 
             /**
              * TODO
@@ -100,7 +101,7 @@ const UsersModel: UsersModelType = {
              */
             yield put({
                 type: 'updateUser',
-                payload: response,
+                payload: data,
             });
         },
     },
