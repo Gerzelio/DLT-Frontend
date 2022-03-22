@@ -337,7 +337,7 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                                         onValueChange={(itemValue, itemIndex) =>
                                             { 
                                                 if(itemIndex !== 0){
-                                                    this.setState({ account:{ ...this.state.account, partners: {"id": itemValue}},
+                                                    this.setState({ account:{ ...this.state.account, partners: partners.filter(partner => parseInt(partner.id) === parseInt(itemValue))[0] },
                                                                     errors: { ...this.state.errors, partners: undefined}}) 
                                                 }
                                             }
@@ -361,7 +361,7 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                                         onValueChange={(itemValue, itemIndex) =>
                                             { 
                                                 if(itemIndex !== 0){
-                                                    this.setState({ account:{ ...this.state.account, profiles: {"id": itemValue} },
+                                                    this.setState({ account:{ ...this.state.account, profiles: profiles.filter(profile => parseInt(profile.id) === parseInt(itemValue))[0] },
                                                                     errors: { ...this.state.errors, profiles: undefined}}) 
                                                 }
                                             }
@@ -384,7 +384,7 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                                         onValueChange={(itemValue, itemIndex) =>
                                             { 
                                                 if(itemValue !== "0"){
-                                                    this.setState({ account:{ ...this.state.account, locality: {"id": itemValue} },
+                                                    this.setState({ account:{ ...this.state.account, locality: localities.filter(locality => parseInt(locality.id) === parseInt(itemValue))[0] },
                                                                     errors: { ...this.state.errors, locality: undefined}}) 
                                                 }
                                             }
@@ -408,7 +408,7 @@ export default class UsersRegistrationForm extends Component<UsersProps, UsersSt
                                         onValueChange={(itemValue, itemIndex) =>
                                             {
                                                 if(itemValue !== "0"){
-                                                    this.setState({ account:{ ...this.state.account, us: {"id": itemValue} },
+                                                    this.setState({ account:{ ...this.state.account, us: us.filter(u => parseInt(u.id) === parseInt(itemValue))[0] },
                                                                     errors: { ...this.state.errors, us: undefined}}) 
                                                 }
                                             }
